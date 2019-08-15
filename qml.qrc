@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>DynamicText.qml</file>
+        <file>TestBinding.qml</file>
+        <file>RecipeList.qml</file>
+        <file>QmlBusyIndicator.qml</file>
+        <file>MyPartical.qml</file>
+        <file>images/flower.png</file>
+        <file>images/yuan.png</file>
+        <file>images/star.png</file>
+        <file>images/needle.png</file>
+        <file>TSoundByte.qml</file>
+        <file>images/feather.jpg</file>
+        <file>images/lotus.png</file>
+        <file>MyToggleButton.qml</file>
+    </qresource>
+</RCC>
