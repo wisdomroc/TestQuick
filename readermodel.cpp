@@ -26,6 +26,8 @@ QVariant ReaderModel::data(const QModelIndex &index, int role) const
             return m_readers.at(index.row())->password();
         case RecordRole:
             return m_readers.at(index.row())->record();
+//        case Qt::TextAlignmentRole:
+//            return int(Qt::AlignHCenter);
         default:
             return QVariant();
         }

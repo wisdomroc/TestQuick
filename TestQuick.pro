@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     record.cpp \
     reader.cpp \
-    readermodel.cpp
+    readermodel.cpp \
+    readertablemodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +37,5 @@ DISTFILES +=
 HEADERS += \
     record.h \
     reader.h \
-    readermodel.h
+    readermodel.h \
+    readertablemodel.h

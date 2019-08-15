@@ -5,7 +5,7 @@ Reader::Reader(const QString &id, const QString &password):
 {
     for(int i = 0; i < 10 ; i ++)
     {
-        Record record(QString::number(i), i);
+        Record record(i, QString::number(i));
         record_.append(QVariant::fromValue(record));
     }
 }

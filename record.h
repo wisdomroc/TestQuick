@@ -6,26 +6,26 @@
 class Record: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString bookId READ bookId WRITE setBookId NOTIFY bookIdChanged)
-    Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 
 public:
-    Record(const QString &bookId="",int state = 0);
+    Record(int id=0,const QString &name="");
     Record(const Record &r);
-    QString bookId() const;
-    int state() const;
+    int id() const;
+    QString name() const;
 
 public slots:
-    void setBookId(const QString &value);
-    void setState(int value);
+    void setId(int value);
+    void setName(const QString &value);
 
 private:
-    QString bookId_;
-    int state_;
+    int id_;
+    QString name_;
 
 signals:
-    void bookIdChanged();
-    void stateChanged();
+    void idChanged();
+    void nameChanged();
 };
 
 Q_DECLARE_METATYPE(Record)//元类型注册

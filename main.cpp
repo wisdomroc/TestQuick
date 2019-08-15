@@ -4,6 +4,8 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include "readermodel.h"
+#include "readertablemodel.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -13,12 +15,14 @@ int main(int argc, char *argv[])
 
     //向qml注册类型
     qmlRegisterType<ReaderModel>("Backend", 1, 0, "ReaderModel");
+    qmlRegisterType<ReaderTableModel>("ReaderTableModel", 1, 0, "ReaderTableModel");
 
     ReaderModel *readerModel = new ReaderModel();
-
+    ReaderTableModel *readerTableModel = new ReaderTableModel();
 
     //向qml传递变量
     engine->rootContext()->setContextProperty("readerModel", readerModel);
+    engine->rootContext()->setContextProperty("readerTableModel", readerTableModel);
     engine->load(QUrl("qrc:/main.qml"));
 
 

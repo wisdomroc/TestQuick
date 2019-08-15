@@ -1,36 +1,36 @@
 ﻿#include "record.h"
 
-Record::Record(const QString &bookId, int state):
-    bookId_(bookId),state_(state)
+Record::Record(int id, const QString &name):
+    id_(id),name_(name)
 {
 
 }
 
 Record::Record(const Record &r)
 {
-    bookId_ = r.bookId_;
-    state_ = r.state_;
+    id_ = r.id();
+    name_ = r.name();
 }
 
-QString Record::bookId() const
+int Record::id() const
 {
-    return bookId_;
+    return id_;
 }
-int Record::state() const
+QString Record::name() const
 {
-    return state_;
+    return name_;
 }
-void Record::setBookId(const QString &value)
+void Record::setId(int value)
 {
-    if(bookId_ == value)
+    if(id_ == value)
         return;
-    bookId_ = value;
-    emit bookIdChanged();
+    id_ = value;
+    emit idChanged();
 }
-void Record::setState(int value)
+void Record::setName(const QString &value)
 {
-    if(state_ == value)
+    if(name_ == value)
         return;
-    state_ = value;
-    emit stateChanged();
+    name_ = value;
+    emit nameChanged();
 }

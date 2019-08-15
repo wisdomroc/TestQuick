@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls 1.0 as QC10
+import QtQuick.Controls.Styles 1.0 as QCS10
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 import "."
@@ -14,107 +15,159 @@ ApplicationWindow {
     height: 1000
     title: qsTr("c")
 
-    MyToggleButton {
-        id: myToggleButton
-        anchors.right: img.left
-        anchors.top: parent.top
-    }
 
+    Rectangle {
+        id: listViewWrapper
+        width: 300
+        height: 200
+        border.width: 2
+        border.color: "steelBlue"
+        radius: 5
 
-    ListView {
-      visible: true
-      id: recordView
-      width: parent.width
-      height: parent.height
-      model: readerModel
-      delegate:Rectangle{
-          width: 200
-          height: 40
-          RowLayout{
-              spacing: 10
-              Label {
-                  text: id
-              }
-              Label {
-                  text: password
-              }
-              Label {
-                  text: record
-              }
-          }
-          Component.onCompleted: {
-            console.log(readerModel)
-          }
-      }
-    }
+        ListView {
+            id: recordView
+            anchors.fill: parent
+            anchors.margins: 6
+            model: readerModel
+            //            highlight: Rectangle { border.color: "red"; radius: 5 }
+            focus: true
+            spacing: 10
+            delegate: listdelegate
 
+            FontMetrics {
+                id: fontMetrics
+                font.family: "Microsoft Yahei"
+                font.pointSize: 10
+            }
 
+            Component{
+                id:listdelegate
+                Rectangle{
+                    id:delegateitem
+                    width: recordView.width
+                    height:fontMetrics.height
+                    TextEdit { text: id + "\t\t\t" + password; font: fontMetrics.font; anchors.fill: parent;
+                        readOnly: false
+                        horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter;
+                        color: delegateitem.ListView.isCurrentItem ? "red" : "gray"
+                    }
 
-
-
-    Button {
-        id: button
-        anchors.right: img.left
-        anchors.top: r.bottom
-        text: "Test Button"
-        onClicked: {
-            console.log("button clicked ...")
-            myToggleButton.grabToImage(function(result) {
-                result.saveToFile("D:/something.png");
-            })
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked:{
+                            delegateitem.ListView.view.currentIndex = index
+                        }
+                        onPressed: {
+                            if(mouse.button == Qt.RightButton)
+                            {
+                                contextMenu.popup()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Menu {
+            id: contextMenu
+            MenuItem { text: "Cut" }
+            MenuItem { text: "Copy" }
+            MenuItem { text: "Paste" }
         }
     }
 
-    Timer {
-        interval: 1000; running: true; repeat: true
-        onTriggered: { button.onClicked();  }
-    }
 
-
-
-    Image {
-        id: img
-        visible: false
+    Rectangle {
+        id: tableViewWrapper
+        anchors.top: listViewWrapper.bottom
         width: 500
-        height: 347
-        source: "images/feather.jpg"
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.right: parent.right
-        anchors.leftMargin: 0
-    }
+        height: 400
+        border.width: 2
+        border.color: "steelBlue"
+        radius: 5
 
-    Image {
-        visible: false
-        id: invisibleImg
-        source: "file:///D:/something.png"
-    }
+        QC10.TableView {
 
-    ShaderEffect {
-        id: r
-        height: myToggleButton.height
-        width: myToggleButton.width
-        anchors.top: myToggleButton.bottom
-        anchors.right: myToggleButton.right
+            id :tableView
+            anchors.fill: parent
+            alternatingRowColors : false
+            selectionMode: 1
+            QC10.TableViewColumn {
+                id: checkedColumn
+                role: "id"
+                title: "Id"
+                width: tableView.viewport.width/tableView.columnCount
+            }
+            QC10.TableViewColumn {
+                role: "password"
+                title: "Password"
+                width: tableView.viewport.width/tableView.columnCount
+            }
+            model: readerTableModel
 
-        property variant source: invisibleImg
-        property size sourceSize: Qt.size(0.5 / myToggleButton.width, 0.5 / myToggleButton.height)
+            //自定义表头代理
+            headerDelegate:
+                Rectangle{
+                //color: "#00498C"
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#085FB2" }
+                    GradientStop { position: 1.0; color: "#00498C" }
+                }
+                //color : styleData.selected ? "blue": "darkgray"
+                width: 100;
+                height: 40
+                border.color: "black"
+                //border.width: 1
+                //radius: 5
+                Text
+                {
+                    anchors.centerIn : parent
+                    text: styleData.value
+                    font.pixelSize: parent.height*0.5
+                }
+            }
 
+            //行代理可以修改行高等信息
+            rowDelegate: Rectangle {
+                height: 50
+                color: "#052641"
+                anchors.leftMargin: 2
 
-        fragmentShader: "
-                varying highp vec2 qt_TexCoord0;
-                uniform lowp sampler2D source;
-                uniform lowp vec2 sourceSize;
-                uniform lowp float qt_Opacity;
-                void main() {
-                    lowp vec2 tc = qt_TexCoord0 * vec2(1, -1) + vec2(0, 1);
-                    lowp vec4 col = 0.25 * (texture2D(source, tc + sourceSize)
-                                            + texture2D(source, tc- sourceSize)
-                                            + texture2D(source, tc + sourceSize * vec2(1, -1))
-                                            + texture2D(source, tc + sourceSize * vec2(-1, 1))
-                                           );
-                    gl_FragColor = col * qt_Opacity * (1.0 - qt_TexCoord0.y) * 0.5;
-                }"
+            }
+            itemDelegate: Rectangle{
+                //color: "#052641"
+                border.width: 1
+                color : styleData.selected ? "#dd00498C": "#052641"
+
+                CheckBox
+                {
+                    anchors.centerIn: parent
+                    checked: styleData.value === "1" ? true : false
+                    visible: isCheckColumn( styleData.column )
+                }
+
+                TextEdit
+                {
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: styleData.value
+                    color: isCheckColumn( styleData.column )? "black": styleData.value
+                    visible: !isCheckColumn( styleData.column )
+                }
+
+                function isCheckColumn( columnIndex )
+                {
+                    return tableView.getColumn( columnIndex ) === checkedColumn
+                }
+            }
+
+            style: QCS10.TableViewStyle{
+                textColor: "white"
+                highlightedTextColor : "#00CCFE"  //选中的颜色
+                backgroundColor : "#052641"
+
+            }
+        }
     }
 }
 
