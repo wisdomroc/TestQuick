@@ -146,13 +146,41 @@ ApplicationWindow {
                     visible: isCheckColumn( styleData.column )
                 }
 
-                TextEdit
-                {
+//                TextEdit
+//                {
+//                    anchors.left: parent.left
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    text: styleData.value
+//                    color: isCheckColumn( styleData.column )? "black": styleData.value
+//                    visible: !isCheckColumn( styleData.column )
+//                }
+                TextArea {
+                    id: nameTextInput
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                     text: styleData.value
-                    color: isCheckColumn( styleData.column )? "black": styleData.value
+                    selectionColor: "#4283aa"
+                    selectedTextColor: "#ffffff"
+                    color: parent.isSelected ? "red" : "green"
                     visible: !isCheckColumn( styleData.column )
+
+                    font.family: fontFamily
+                    font.pixelSize: fontPixel
+                    selectByMouse: true
+
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            if (pressed) {
+                                tableView.currentColumn = styleData.column;
+    //                            parent.forceActiveFocus();
+                            }
+                            mouse.accepted = false;
+                        }
+                    }
                 }
 
                 function isCheckColumn( columnIndex )

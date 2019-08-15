@@ -71,10 +71,20 @@ QVariant ReaderTableModel::data(const QModelIndex &index, int role) const
     }
     else
     {
-        int columnIdx = role - Qt::UserRole - 1;
-        QModelIndex modelIndex = this->index(index.row(), columnIdx);
-        qDebug() << index.row() << "," << modelIndex.column() << endl;
-        return m_datas.at(modelIndex.row()).at(modelIndex.column());
+//        int columnIdx = role - Qt::UserRole - 1;
+//        QModelIndex modelIndex = this->index(index.row(), columnIdx);
+//        qDebug() << index.row() << "," << modelIndex.column() << endl;
+//        return m_datas.at(modelIndex.row()).at(modelIndex.column());
+        Reader *reader = m_readers.at(index.row());
+        int num = role - Qt::UserRole - 1;
+        if(num == 0)
+        {
+            return reader->id();
+        }
+        else if(num == 1)
+        {
+            return reader->password();
+        }
     }
     return QVariant();
 }
@@ -82,7 +92,7 @@ QVariant ReaderTableModel::data(const QModelIndex &index, int role) const
 bool ReaderTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (data(index, role) != value) {
-        // FIXME: Implement me!
+        m_readers.replace(index.row(), value.value<Reader *>());
         emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
