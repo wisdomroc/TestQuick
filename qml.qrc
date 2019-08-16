@@ -14,5 +14,7 @@
         <file>images/feather.jpg</file>
         <file>images/lotus.png</file>
         <file>MyToggleButton.qml</file>
+        <file>MyListView.qml</file>
+        <file>Font/fontawesome-webfont.ttf</file>
     </qresource>
 </RCC>

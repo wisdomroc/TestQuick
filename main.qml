@@ -139,21 +139,20 @@ ApplicationWindow {
                 border.width: 1
                 color : styleData.selected ? "#dd00498C": "#052641"
 
-                CheckBox
-                {
-                    anchors.centerIn: parent
-                    checked: styleData.value === "1" ? true : false
-                    visible: isCheckColumn( styleData.column )
-                }
-
-//                TextEdit
+//                CheckBox
 //                {
-//                    anchors.left: parent.left
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    text: styleData.value
-//                    color: isCheckColumn( styleData.column )? "black": styleData.value
-//                    visible: !isCheckColumn( styleData.column )
+//                    anchors.centerIn: parent
+//                    checked: styleData.value === "1" ? true : false
+//                    visible: isCheckColumn( styleData.column )
 //                }
+
+                TextInput
+                {
+                    anchors.fill: parent
+                    text: styleData.value
+                    color: tableView.currentRow === styleData.row ? "red" : "green"
+                    visible: tableView.currentColumn === 0
+                }
                 TextArea {
                     id: nameTextInput
                     anchors.left: parent.left
@@ -163,11 +162,9 @@ ApplicationWindow {
                     text: styleData.value
                     selectionColor: "#4283aa"
                     selectedTextColor: "#ffffff"
-                    color: parent.isSelected ? "red" : "green"
+                    color: tableView.currentRow === styleData.row ? "red" : "green"
                     visible: !isCheckColumn( styleData.column )
 
-                    font.family: fontFamily
-                    font.pixelSize: fontPixel
                     selectByMouse: true
 
 
@@ -176,7 +173,6 @@ ApplicationWindow {
                         onPressed: {
                             if (pressed) {
                                 tableView.currentColumn = styleData.column;
-    //                            parent.forceActiveFocus();
                             }
                             mouse.accepted = false;
                         }
@@ -196,6 +192,12 @@ ApplicationWindow {
 
             }
         }
+    }
+
+    MyListView {
+        x: 600
+        anchors.top: parent.top
+
     }
 }
 

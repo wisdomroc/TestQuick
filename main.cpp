@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QQmlContext>
 #include <QQuickView>
+#include <QFontDatabase>
 #include "readermodel.h"
 #include "readertablemodel.h"
 
@@ -25,6 +26,13 @@ int main(int argc, char *argv[])
     engine->rootContext()->setContextProperty("readerTableModel", readerTableModel);
     engine->load(QUrl("qrc:/main.qml"));
 
+    int fontId = QFontDatabase::addApplicationFont(":/Font/fontawesome-webfont.ttf");
+    QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+    qDebug() << "fontFamilies: " << fontFamilies;
+    QFont font;
+    font.setFamily(fontFamilies.first());
+    font.setPointSize(10);
+    app.setFont(font);
 
     return app.exec();
 }

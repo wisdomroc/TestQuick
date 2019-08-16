@@ -67,24 +67,24 @@ QVariant ReaderTableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::TextAlignmentRole)
     {
-        return int(Qt::AlignRight | Qt::AlignVCenter);
+        return int(Qt::AlignHCenter | Qt::AlignVCenter);
     }
     else
     {
-//        int columnIdx = role - Qt::UserRole - 1;
-//        QModelIndex modelIndex = this->index(index.row(), columnIdx);
-//        qDebug() << index.row() << "," << modelIndex.column() << endl;
-//        return m_datas.at(modelIndex.row()).at(modelIndex.column());
-        Reader *reader = m_readers.at(index.row());
-        int num = role - Qt::UserRole - 1;
-        if(num == 0)
-        {
-            return reader->id();
-        }
-        else if(num == 1)
-        {
-            return reader->password();
-        }
+        int columnIdx = role - Qt::UserRole - 1;
+        QModelIndex modelIndex = this->index(index.row(), columnIdx);
+        qDebug() << index.row() << "," << modelIndex.column() << endl;
+        return m_datas.at(modelIndex.row()).at(modelIndex.column());
+        //        Reader *reader = m_readers.at(index.row());
+        //        int num = role - Qt::UserRole - 1;
+        //        if(num == 0)
+        //        {
+        //            return reader->id();
+        //        }
+        //        else if(num == 1)
+        //        {
+        //            return reader->password();
+        //        }
     }
     return QVariant();
 }
@@ -101,10 +101,14 @@ bool ReaderTableModel::setData(const QModelIndex &index, const QVariant &value, 
 
 Qt::ItemFlags ReaderTableModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
-        return Qt::NoItemFlags;
-
-    return Qt::ItemIsEditable; // FIXME: Implement me!
+    if (index.column() == 0)
+    {
+        return Qt::ItemIsEnabled | Qt::ItemNeverHasChildren;
+    }
+    else
+    {
+        return Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemNeverHasChildren;
+    }
 }
 
 QHash<int, QByteArray> ReaderTableModel::roleNames() const

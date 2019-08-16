@@ -6,5 +6,5 @@ Text {
       height: 200
       text: "Default text"
       property string dynamicText: "Dynamic text"
-      onTextChanged: console.log(text)
+//      onTextChanged: console.log(text)
   }
