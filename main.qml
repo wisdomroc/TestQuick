@@ -151,7 +151,7 @@ ApplicationWindow {
                     anchors.fill: parent
                     text: styleData.value
                     color: tableView.currentRow === styleData.row ? "red" : "green"
-                    visible: tableView.currentColumn === 0
+                    visible: !isCheckColumn( styleData.column )
                 }
                 TextArea {
                     id: nameTextInput
