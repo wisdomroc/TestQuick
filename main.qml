@@ -79,7 +79,7 @@ ApplicationWindow {
 
     Rectangle {
         id: tableViewWrapper
-        anchors.top: listViewWrapper.bottom
+        anchors.left: listViewWrapper.right
         width: 500
         height: 400
         border.width: 2
@@ -135,53 +135,35 @@ ApplicationWindow {
 
             }
             itemDelegate: Rectangle{
-                //color: "#052641"
                 border.width: 1
                 color : styleData.selected ? "#dd00498C": "#052641"
-
-//                CheckBox
-//                {
-//                    anchors.centerIn: parent
-//                    checked: styleData.value === "1" ? true : false
-//                    visible: isCheckColumn( styleData.column )
-//                }
 
                 TextInput
                 {
                     anchors.fill: parent
                     text: styleData.value
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                     color: tableView.currentRow === styleData.row ? "red" : "green"
-                    visible: !isCheckColumn( styleData.column )
+                    visible: styleData.column === 0
+                    font.family: "Microsoft Yahei"
+                    font.pointSize: 20
                 }
                 TextArea {
                     id: nameTextInput
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     text: styleData.value
                     selectionColor: "#4283aa"
                     selectedTextColor: "#ffffff"
                     color: tableView.currentRow === styleData.row ? "red" : "green"
-                    visible: !isCheckColumn( styleData.column )
+                    visible: styleData.column === 1
+                    font.family: "Microsoft Yahei"
+                    font.pointSize: 20
+
 
                     selectByMouse: true
-
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: {
-                            if (pressed) {
-                                tableView.currentColumn = styleData.column;
-                            }
-                            mouse.accepted = false;
-                        }
-                    }
-                }
-
-                function isCheckColumn( columnIndex )
-                {
-                    return tableView.getColumn( columnIndex ) === checkedColumn
                 }
             }
 
@@ -194,8 +176,34 @@ ApplicationWindow {
         }
     }
 
+    Row {
+        anchors.left: tableViewWrapper.left
+        anchors.top: tableViewWrapper.bottom
+        spacing: 10
+        Button {
+            width: 120;
+            height: 30;
+            text: "Add Rows"
+            onClicked: {
+                console.log("Add Rows Btn Clicked ...")
+                readerTableModel.insertRows(2, 2);
+            }
+        }
+        Button {
+            width: 120;
+            height: 30;
+            text: "Remove Rows"
+            onClicked: {
+                console.log("Remove Rows Btn Clicked ...")
+                readerTableModel.removeRows(2,2);
+            }
+        }
+    }
+
+
+
     MyListView {
-        x: 600
+        anchors.left: tableViewWrapper.right
         anchors.top: parent.top
 
     }

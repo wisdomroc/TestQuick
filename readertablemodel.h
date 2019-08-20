@@ -33,15 +33,11 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-    /*
-    // Add data:
-    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 
-    // Remove data:
-    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
-    */
+    // Add data:
+    Q_INVOKABLE bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
 
 private:
 

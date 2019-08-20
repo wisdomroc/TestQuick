@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     qDebug() << "fontFamilies: " << fontFamilies;
     QFont font;
     font.setFamily(fontFamilies.first());
-    font.setPointSize(10);
+    font.setPointSize(20);
     app.setFont(font);
 
     return app.exec();

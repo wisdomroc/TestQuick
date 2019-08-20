@@ -119,32 +119,29 @@ QHash<int, QByteArray> ReaderTableModel::roleNames() const
     return roles;
 }
 
-/*
 bool ReaderTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
     // FIXME: Implement me!
+    for(int i = 0; i < count; i ++)
+    {
+        QVariantList list;
+        list.append(tr("%1").arg(i + 2));
+        list.append(tr("%1%1%1%1%1%1").arg(i +2));
+        m_datas.insert(row + i, list);
+    }
     endInsertRows();
-}
-
-bool ReaderTableModel::insertColumns(int column, int count, const QModelIndex &parent)
-{
-    beginInsertColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endInsertColumns();
+    return true;
 }
 
 bool ReaderTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     // FIXME: Implement me!
+    for(int i = row + count - 1; i >= row; i --)
+    {
+        m_datas.removeAt(i);
+    }
     endRemoveRows();
+    return true;
 }
-
-bool ReaderTableModel::removeColumns(int column, int count, const QModelIndex &parent)
-{
-    beginRemoveColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endRemoveColumns();
-}
-*/
