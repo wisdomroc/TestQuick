@@ -16,5 +16,7 @@
         <file>MyToggleButton.qml</file>
         <file>MyListView.qml</file>
         <file>Font/fontawesome-webfont.ttf</file>
+        <file>Login.qml</file>
+        <file>GoogleButton.qml</file>
     </qresource>
 </RCC>

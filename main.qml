@@ -15,6 +15,11 @@ ApplicationWindow {
     height: 1000
     title: qsTr("c")
 
+    GoogleButton {
+        x: 50
+        y: 500
+    }
+
 
     Rectangle {
         id: listViewWrapper
