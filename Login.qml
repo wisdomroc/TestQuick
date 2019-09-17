@@ -9,7 +9,7 @@ Window {
     width: 640
     height: 480
     title: qsTr("QQ登录界面实现")
-    flags:Qt.Window | Qt.FramelessWindowHint//窗口设置为无边框
+//    flags:Qt.Window | Qt.FramelessWindowHint//窗口设置为无边框
     color: "transparent"//颜色为透明
 
     property int originWidth: 500
@@ -17,12 +17,7 @@ Window {
     property string fontFamily: "微软雅黑"
     property int fontSize: 12
 
-    Button {
-        text: "BACK"
-        width: 100
-        height: 40
-        onClicked: flipable.flipped = !flipable.flipped
-    }
+
 
     Flipable {
         id: flipable
@@ -127,6 +122,12 @@ Window {
                     Layout.alignment: Qt.AlignHCenter
                     onClicked: {
                         flipable.flipped = !flipable.flipped
+
+                        var component = Qt.createComponent("main.qml");
+                                  if (component.status === Component.Ready) {
+                                      var mainWindow = component.createObject(rootWindow);
+                                      rootWindow.showMaximized()
+                                  }
                     }
                 }
 
@@ -144,6 +145,14 @@ Window {
             width: originWidth
             color: "lightgray"
             anchors.centerIn: parent
+
+            Button {
+                text: "BACK"
+                width: 100
+                height: 40
+                onClicked: flipable.flipped = !flipable.flipped
+            }
+
             Text {
                 id: name1
                 text: "我是背面"

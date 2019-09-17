@@ -6,14 +6,13 @@ import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 import "."
 
-ApplicationWindow {
+Rectangle {
     property int standardWidth: 50
     property int standardHeight: 50
     id: root
     visible: true
     width: 1600
     height: 1000
-    title: qsTr("c")
 
     GoogleButton {
         x: 50
