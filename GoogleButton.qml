@@ -6,6 +6,7 @@ Rectangle {
     id: par
     border.width: mouse.containsMouse? 2 : 0.5//按钮边框
     border.color: mouse.containsMouse?"lightblue":"lightgray"
+
     height: 30
     width: 70
     color: "transparent"

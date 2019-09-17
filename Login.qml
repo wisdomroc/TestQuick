@@ -1,5 +1,7 @@
 ﻿import QtQuick 2.10
 import QtQuick.Window 2.10
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.0
 
 Window {
     id:rootWindow
@@ -12,6 +14,15 @@ Window {
 
     property int originWidth: 500
     property int originHeight: 300
+    property string fontFamily: "微软雅黑"
+    property int fontSize: 12
+
+    Button {
+        text: "BACK"
+        width: 100
+        height: 40
+        onClicked: flipable.flipped = !flipable.flipped
+    }
 
     Flipable {
         id: flipable
@@ -26,14 +37,106 @@ Window {
             width: originWidth
             color: "gray"
             anchors.centerIn: parent
-            Text {
-                id: name
-                text: "我是正面"
-                color: "green"
-                anchors.centerIn: parent
-                font.pointSize: 14
-                font.family: "微软雅黑"
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 6
+                Text {
+                    id: name
+                    text: "我是正面"
+                    horizontalAlignment: Qt.AlignHCenter
+                    color: "green"
+                    font.family: fontFamily
+                    font.pointSize: fontSize
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 40
+                }
+
+                Rectangle {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.preferredWidth: 200
+                    Layout.preferredHeight: 80
+                    radius: 5
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "gray"
+                        anchors.centerIn: parent
+                    }
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        TextEdit {
+                            id: username
+                            Layout.fillWidth: true
+                            font.family: fontFamily
+                            font.pointSize: fontSize
+
+                            Text {
+                                text: "用户名/邮箱/手机号"
+                                font.family: fontFamily
+                                font.pointSize: fontSize
+                                color: "lightGray"
+                                visible: username.text === ""
+                                anchors.fill: username
+                            }
+
+                            Text {
+                                text: "注册账号"
+                                visible: username === ""
+                                anchors.left: username.right
+                            }
+                        }
+
+                        TextEdit {
+                            id: password
+                            Layout.fillWidth: true
+                            font.family: fontFamily
+                            font.pointSize: fontSize
+
+                            Text {
+                                text: "密码"
+                                font.family: fontFamily
+                                font.pointSize: fontSize
+                                color: "lightGray"
+                                visible: password.text === ""
+                                anchors.fill: password
+                            }
+
+                            Text {
+                                text: "忘记密码"
+                                visible: password === ""
+                                anchors.left: password.right
+                            }
+                        }
+                    }
+                }
+
+                Row {
+                    Layout.alignment: Qt.AlignHCenter
+                    CheckBox {
+                        text: "记住密码"
+                    }
+
+                    CheckBox {
+                        text: "自动登录"
+                    }
+                }
+
+                Button {
+                    text: "安全登录"
+                    Layout.alignment: Qt.AlignHCenter
+                    onClicked: {
+                        flipable.flipped = !flipable.flipped
+                    }
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
             }
+
+
+
         }
         back: Rectangle{//背面的内容
             id:back
@@ -78,10 +181,10 @@ Window {
             NumberAnimation { target: rotation; property: "angle"; duration: 500 }
         }
     }
-    MouseArea {//鼠标事件
-        anchors.fill: parent
-        onClicked: {
-            flipable.flipped = !flipable.flipped//翻转状态切换
+//    MouseArea {//鼠标事件
+//        anchors.fill: parent
+//        onClicked: {
+//            flipable.flipped = !flipable.flipped//翻转状态切换
 //                            if(flipable.flipped){//根据翻转状态，调用不同的翻转高度变化动画
 //                                toback.start()
 //                                console.log("1")
@@ -89,6 +192,6 @@ Window {
 //                                tofront.start()
 //                                console.log("2")
 //                            }
-        }
-    }
+//        }
+//    }
 }
