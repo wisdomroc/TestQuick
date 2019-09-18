@@ -18,5 +18,21 @@
         <file>Font/fontawesome-webfont.ttf</file>
         <file>Login.qml</file>
         <file>GoogleButton.qml</file>
+        <file>images/add.png</file>
+        <file>images/false.png</file>
+        <file>images/fork.png</file>
+        <file>images/icon.jpg</file>
+        <file>images/minu.png</file>
+        <file>images/pulldown.png</file>
+        <file>images/qr.png</file>
+        <file>images/safe.png</file>
+        <file>images/true.png</file>
+        <file>RadioImage.qml</file>
+        <file>TimLogin.qml</file>
+        <file>Field.qml</file>
+        <file>BackColor.qml</file>
+        <file>StyleButton.qml</file>
+        <file>images/background.png</file>
+        <file>MyTestRectangle.qml</file>
     </qresource>
 </RCC>

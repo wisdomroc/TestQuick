@@ -3,14 +3,17 @@ import QtQuick.Window 2.10
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
 
-Window {
+Rectangle {
     id:rootWindow
     visible: true
     width: 640
     height: 480
-    title: qsTr("QQ登录界面实现")
-//    flags:Qt.Window | Qt.FramelessWindowHint//窗口设置为无边框
-    color: "transparent"//颜色为透明
+
+    Image {
+        id: background
+        source: "images/tim.jpeg"
+    }
+
 
     property int originWidth: 500
     property int originHeight: 300
