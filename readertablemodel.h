@@ -37,7 +37,7 @@ public:
     // Add data:
     Q_INVOKABLE bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
+    Q_INVOKABLE QString getTestData();
 
 private:
 

@@ -22,7 +22,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
-
+    Q_INVOKABLE QString getTestData();
 
 private:
     QList<Reader *> m_readers;

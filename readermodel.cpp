@@ -43,3 +43,8 @@ QHash<int, QByteArray> ReaderModel::roleNames() const
     roles.insert(RecordRole, "record");
     return roles;
 }
+
+QString ReaderModel::getTestData()
+{
+    return m_readers.last()->id();
+}

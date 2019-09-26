@@ -145,3 +145,8 @@ bool ReaderTableModel::removeRows(int row, int count, const QModelIndex &parent)
     endRemoveRows();
     return true;
 }
+
+QString ReaderTableModel::getTestData()
+{
+    return m_datas.first().first().toString();
+}

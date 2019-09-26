@@ -15,14 +15,14 @@ ApplicationWindow {
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
 
-    TimLogin {
-        id: login
-    }
+//    TimLogin {
+//        id: login
+//    }
 
     Item {
         id: mainwindow
         anchors.fill: parent
-        visible: false
+        visible: true
 
 
         GoogleButton {
@@ -72,6 +72,7 @@ ApplicationWindow {
                             acceptedButtons: Qt.LeftButton | Qt.RightButton
                             onClicked:{
                                 delegateitem.ListView.view.currentIndex = index
+                                console.log(readerModel.getTestData())
                             }
                             onPressed: {
                                 if(mouse.button == Qt.RightButton)
@@ -153,7 +154,7 @@ ApplicationWindow {
                     border.width: 1
                     color : styleData.selected ? "#dd00498C": "#052641"
 
-                    TextInput
+                    Text
                     {
                         anchors.fill: parent
                         text: styleData.value
@@ -163,6 +164,12 @@ ApplicationWindow {
                         visible: styleData.column === 0
                         font.family: "Microsoft Yahei"
                         font.pointSize: 20
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log(readerTableModel.getTestData())
+                            }
+                        }
                     }
                     TextArea {
                         id: nameTextInput
