@@ -7,17 +7,17 @@ import QtQuick.Controls.Styles 1.4
 *     模仿 tim的登录界面
 * 如何把边框搞成圆角矩形？？？？
 */
-Rectangle {
-    id:loginDlg
-//    title: qsTr("TIM")
-//    flags:Qt.FramelessWindowHint //去掉标题栏
+
+Item {
     width: 440
     height: 330
     visible: true
-//    background:Image{
-//        id:image
-//        source: "qrc:/images/background.png"
-//    }
+    Image{
+        id:image
+        source: "qrc:/images/background.png"
+        anchors.fill: parent
+    }
+
     MouseArea{
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
@@ -27,8 +27,10 @@ Rectangle {
         }
         onPositionChanged: {//鼠标按下后位置改变
             var delta=Qt.point(mouse.x-cliCkPos.x,mouse.y-cliCkPos.y)
-            loginDlg.x=(loginDlg.x+delta.x) //loginDlg.x y 恒为0
-            loginDlg.y=(loginDlg.y+delta.y)
+
+            root.x=(root.x+delta.x) //mainWindow.x y 恒为0
+            root.y=(root.y+delta.y)
+
         }
     } //MouseArea end
 
@@ -216,9 +218,11 @@ Rectangle {
                         hoverEnabled: true
                         onClicked: {
                             flip.flipped = !flip.flipped
-                            console.log(field.account+"\n"+field.password)
-                            mainwindow.visible = true
-                            login.visible = false
+
+                            console.log("username:" + "\n" + field.account+"\n" + "password:" + "\n" + field.password)
+                            delayTimer.start();
+//                            sceneTransition(loginDlg, centerWidget) //过渡动画
+
                         }
                         onEntered: {
                             button.color="#3CC3F5"
