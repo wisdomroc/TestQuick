@@ -50,12 +50,6 @@ ApplicationWindow {
 
                 color: "lightGray"
 
-                Button {
-                    id: closeBtn
-                    text: "关闭"
-                    onClicked:Qt.quit()
-                }
-
                 MouseArea{
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
@@ -69,28 +63,66 @@ ApplicationWindow {
                         root.y=(root.y+delta.y)
                     }
                 }
+
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    Button {
+                        id: closeBtn
+                        text: "关闭"
+                        onClicked:Qt.quit()
+                        font.pointSize: 12
+                        font.family:"微软雅黑"
+
+                        contentItem: Text {
+                            text: closeBtn.text
+                            font: closeBtn.font
+                            opacity: enabled ? 1.0 : 0.3
+                            color: closeBtn.down ? "white" : "lightGray"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+
+                        background: Rectangle {
+                            implicitWidth: 80
+                            implicitHeight: 36
+                            color: "gray"
+                            border.width: closeBtn.hovered ? 2 : 0.5//按钮边框
+                            border.color: closeBtn.hovered ? "lightblue":"lightgray"
+                            radius: 4
+                        }
+                    }
+
+                    GoogleButton {
+                        id: googleButton
+                        height: closeBtn.height
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                }
             }
+
             Rectangle {
                 id: splitter
-                width: parent.width
-                height: 1
+                Layout.fillWidth: true
+                height: 2
                 color: "black"
-                anchors.top: titleBar.bottom
             }
-
-            GoogleButton {
-                id: googleButton
-            }
-
 
             RowLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                spacing: 20
 
                 Rectangle {
                     id: listViewWrapper
-                    width: 300
-                    height: 200
+                    width: 400
+                    Layout.fillHeight: true
                     border.width: 2
                     border.color: "steelBlue"
                     radius: 5
@@ -155,132 +187,141 @@ ApplicationWindow {
 
 
                 Rectangle {
-                    id: tableViewWrapper
-                    width: 500
-                    height: 400
-                    border.width: 2
-                    border.color: "steelBlue"
-                    radius: 5
+                    width: 400
+                    Layout.fillHeight: true
+                    ColumnLayout {
+                        width: parent.width
+                        height: parent.height
+                        Rectangle {
+                            id: tableViewWrapper
+                            Layout.fillHeight: true
+                            width: parent.width
+                            border.width: 2
+                            border.color: "steelBlue"
+                            radius: 5
 
-                    QC10.TableView {
+                            QC10.TableView {
 
-                        id :tableView
-                        anchors.fill: parent
-                        alternatingRowColors : false
-                        selectionMode: 1
-                        QC10.TableViewColumn {
-                            id: checkedColumn
-                            role: "id"
-                            title: "Id"
-                            width: tableView.viewport.width/tableView.columnCount
-                        }
-                        QC10.TableViewColumn {
-                            role: "password"
-                            title: "Password"
-                            width: tableView.viewport.width/tableView.columnCount
-                        }
-                        model: readerTableModel
-
-                        //自定义表头代理
-                        headerDelegate:
-                            Rectangle{
-                            //color: "#00498C"
-                            gradient: Gradient {
-                                GradientStop { position: 0.0; color: "#085FB2" }
-                                GradientStop { position: 1.0; color: "#00498C" }
-                            }
-                            //color : styleData.selected ? "blue": "darkgray"
-                            width: 100;
-                            height: 40
-                            border.color: "black"
-                            //border.width: 1
-                            //radius: 5
-                            Text
-                            {
-                                anchors.centerIn : parent
-                                text: styleData.value
-                                font.pixelSize: parent.height*0.5
-                            }
-                        }
-
-                        //行代理可以修改行高等信息
-                        rowDelegate: Rectangle {
-                            height: 50
-                            color: "#052641"
-                            anchors.leftMargin: 2
-
-                        }
-                        itemDelegate: Rectangle{
-                            border.width: 1
-                            color : styleData.selected ? "#dd00498C": "#052641"
-
-                            TextInput
-                            {
+                                id :tableView
                                 anchors.fill: parent
-                                text: styleData.value
-                                verticalAlignment: Text.AlignVCenter
-                                horizontalAlignment: Text.AlignHCenter
-                                color: tableView.currentRow === styleData.row ? "red" : "green"
-                                visible: styleData.column === 0
-                                font.family: "Microsoft Yahei"
-                                font.pointSize: 20
+                                alternatingRowColors : false
+                                selectionMode: 1
+                                QC10.TableViewColumn {
+                                    id: checkedColumn
+                                    role: "id"
+                                    title: "Id"
+                                    width: tableView.viewport.width/tableView.columnCount
+                                }
+                                QC10.TableViewColumn {
+                                    role: "password"
+                                    title: "Password"
+                                    width: tableView.viewport.width/tableView.columnCount
+                                }
+                                model: readerTableModel
+
+                                //自定义表头代理
+                                headerDelegate:
+                                    Rectangle{
+                                    //color: "#00498C"
+                                    gradient: Gradient {
+                                        GradientStop { position: 0.0; color: "#085FB2" }
+                                        GradientStop { position: 1.0; color: "#00498C" }
+                                    }
+                                    //color : styleData.selected ? "blue": "darkgray"
+                                    width: 100;
+                                    height: 40
+                                    border.color: "black"
+                                    //border.width: 1
+                                    //radius: 5
+                                    Text
+                                    {
+                                        anchors.centerIn : parent
+                                        text: styleData.value
+                                        font.pixelSize: parent.height*0.5
+                                    }
+                                }
+
+                                //行代理可以修改行高等信息
+                                rowDelegate: Rectangle {
+                                    height: 50
+                                    color: "#052641"
+                                    anchors.leftMargin: 2
+
+                                }
+                                itemDelegate: Rectangle{
+                                    border.width: 1
+                                    color : styleData.selected ? "#dd00498C": "#052641"
+
+                                    TextInput
+                                    {
+                                        anchors.fill: parent
+                                        text: styleData.value
+                                        verticalAlignment: Text.AlignVCenter
+                                        horizontalAlignment: Text.AlignHCenter
+                                        color: tableView.currentRow === styleData.row ? "red" : "green"
+                                        visible: styleData.column === 0
+                                        font.family: "Microsoft Yahei"
+                                        font.pointSize: 20
+                                    }
+                                    TextArea {
+                                        id: nameTextInput
+                                        anchors.fill: parent
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                        text: styleData.value
+                                        selectionColor: "#4283aa"
+                                        selectedTextColor: "#ffffff"
+                                        color: tableView.currentRow === styleData.row ? "red" : "green"
+                                        visible: styleData.column === 1
+                                        font.family: "Microsoft Yahei"
+                                        font.pointSize: 20
+
+
+                                        selectByMouse: true
+                                    }
+                                }
+
+                                style: QCS10.TableViewStyle{
+                                    textColor: "white"
+                                    highlightedTextColor : "#00CCFE"  //选中的颜色
+                                    backgroundColor : "#052641"
+
+                                }
                             }
-                            TextArea {
-                                id: nameTextInput
-                                anchors.fill: parent
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                text: styleData.value
-                                selectionColor: "#4283aa"
-                                selectedTextColor: "#ffffff"
-                                color: tableView.currentRow === styleData.row ? "red" : "green"
-                                visible: styleData.column === 1
-                                font.family: "Microsoft Yahei"
-                                font.pointSize: 20
+                        }
 
+                        RowLayout {
+                            spacing: 10
+                            Button {
+                                width: 120;
+                                height: 30;
+                                text: "Add Rows"
+                                onClicked: {
+                                    console.log("Add Rows Btn Clicked ...")
+                                    readerTableModel.insertRows(2, 2);
 
-                                selectByMouse: true
+                                }
                             }
-                        }
-
-                        style: QCS10.TableViewStyle{
-                            textColor: "white"
-                            highlightedTextColor : "#00CCFE"  //选中的颜色
-                            backgroundColor : "#052641"
-
-                        }
-                    }
-                }
-
-
-                Row {
-
-                    spacing: 10
-                    Button {
-                        width: 120;
-                        height: 30;
-                        text: "Add Rows"
-                        onClicked: {
-                            console.log("Add Rows Btn Clicked ...")
-                            readerTableModel.insertRows(2, 2);
-
-                        }
-                    }
-                    Button {
-                        width: 120;
-                        height: 30;
-                        text: "Remove Rows"
-                        onClicked: {
-                            console.log("Remove Rows Btn Clicked ...")
-                            readerTableModel.removeRows(2,2);
+                            Button {
+                                width: 120;
+                                height: 30;
+                                text: "Remove Rows"
+                                onClicked: {
+                                    console.log("Remove Rows Btn Clicked ...")
+                                    readerTableModel.removeRows(2,2);
+                                }
+                            }
                         }
                     }
                 }
 
                 MyListView {
                     id: listView
-
+                    width: root.width / 2
+                    Layout.fillHeight: true
+                    Component.onCompleted: listView.initData(10)
                 }
+
             }
         }
     }

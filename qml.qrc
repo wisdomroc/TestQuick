@@ -34,5 +34,6 @@
         <file>StyleButton.qml</file>
         <file>images/background.png</file>
         <file>MyTestRectangle.qml</file>
+        <file>main1.qml</file>
     </qresource>
 </RCC>

@@ -7,9 +7,9 @@ Rectangle {
     border.width: mouse.containsMouse? 2 : 0.5//按钮边框
     border.color: mouse.containsMouse?"lightblue":"lightgray"
 
-    height: 30
-    width: 70
-    color: "transparent"
+    implicitWidth: 80
+    implicitHeight: 36
+    color: "Gray"
     clip: true
     radius: 4
     Text {//按钮文字
