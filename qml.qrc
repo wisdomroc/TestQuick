@@ -35,5 +35,6 @@
         <file>images/background.png</file>
         <file>MyTestRectangle.qml</file>
         <file>main1.qml</file>
+        <file>draw_and_pathView.qml</file>
     </qresource>
 </RCC>
