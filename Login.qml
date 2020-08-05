@@ -3,40 +3,62 @@ import QtQuick.Window 2.10
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
 
-Rectangle {
+ApplicationWindow {
     id:rootWindow
     visible: true
-    width: 640
-    height: 480
+    width: 800
+    height: 600
+    flags: Qt.Window | Qt.FramelessWindowHint
+    background: Item {
 
-    Image {
-        id: background
-        source: "images/tim.jpeg"
     }
-
 
     property int originWidth: 500
     property int originHeight: 300
     property string fontFamily: "微软雅黑"
     property int fontSize: 12
 
+    MouseArea {
+        anchors.fill: parent
+        property point originalPos
+        property bool isPressed: false
+        onPressed: {
+            isPressed = true
+            originalPos = Qt.point(mouse.x, mouse.y)
+            console.log("originalPos-->" + originalPos)
+        }
+        onPositionChanged: {
+            if(isPressed)
+            {
+                var newPos = Qt.point(mouse.x, mouse.y)
+                var dis_x = newPos.x - originalPos.x
+                var dis_y = newPos.y - originalPos.y
+                console.log("distance-->" + dis_x + ", " + dis_y)
+                rootWindow.x += dis_x
+                rootWindow.y += dis_y
+            }
+        }
+        onReleased: {
+            isPressed = false
+        }
+    }
 
 
     Flipable {
         id: flipable
         anchors.centerIn: parent
-        width: originWidth
-        height: originHeight
+        width: 500
+        height: 300
 
         property bool flipped: false//翻转状态保存
         front:  Rectangle{//正面的内容
             id:front
-            height: originHeight
-            width: originWidth
+            height: flipable.width
+            width: flipable.height
             color: "gray"
             anchors.centerIn: parent
             ColumnLayout {
-                anchors.fill: parent
+                anchors.centerIn: parent
                 spacing: 6
                 Text {
                     id: name
@@ -80,7 +102,8 @@ Rectangle {
 
                             Text {
                                 text: "注册账号"
-                                visible: username === ""
+                                color: "blue"
+                                visible: username.text === ""
                                 anchors.left: username.right
                             }
                         }
@@ -102,7 +125,8 @@ Rectangle {
 
                             Text {
                                 text: "忘记密码"
-                                visible: password === ""
+                                color: "blue"
+                                visible: password.text === ""
                                 anchors.left: password.right
                             }
                         }
@@ -128,24 +152,18 @@ Rectangle {
 
                         var component = Qt.createComponent("main.qml");
                                   if (component.status === Component.Ready) {
-                                      var mainWindow = component.createObject(rootWindow);
+                                      var mainWindow = component.createObject(NULL);
                                       rootWindow.showMaximized()
                                   }
                     }
                 }
 
-                Item {
-                    Layout.fillHeight: true
-                }
             }
-
-
-
         }
         back: Rectangle{//背面的内容
             id:back
-            height: originHeight
-            width: originWidth
+            height: flipable.width
+            width: flipable.height
             color: "lightgray"
             anchors.centerIn: parent
 
@@ -190,9 +208,13 @@ Rectangle {
         }
 
         transitions: Transition {//转动的动画
-            NumberAnimation { target: rotation; property: "angle"; duration: 500 }
+            NumberAnimation { target: rotation; property: "angle"; duration: 2000 }
         }
     }
+
+
+
+
 //    MouseArea {//鼠标事件
 //        anchors.fill: parent
 //        onClicked: {
@@ -206,4 +228,45 @@ Rectangle {
 //                            }
 //        }
 //    }
+
+
+
+
+//    Flipable {
+//        id: flipable
+//        anchors.centerIn: parent
+//        width: 240
+//        height: 240
+
+//        property bool flipped: false
+
+//        front: Rectangle { width: flipable.width; height: flipable.height; color: "red"; anchors.centerIn: parent }
+//        back: Rectangle { width: flipable.width; height: flipable.height; color: "green"; anchors.centerIn: parent }
+
+//        transform: Rotation {
+//            id: rotation1
+//            origin.x: flipable.width/2
+//            origin.y: flipable.height/2
+//            axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
+//            angle: 0    // the default angle
+//        }
+
+//        states: State {
+//            name: "back"
+//            PropertyChanges { target: rotation1; angle: 180 }
+//            when: flipable.flipped
+//        }
+
+//        transitions: Transition {
+//            NumberAnimation { target: rotation1; property: "angle"; duration: 4000 }
+//        }
+
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: flipable.flipped = !flipable.flipped
+//        }
+//    }
+
+
+
 }
