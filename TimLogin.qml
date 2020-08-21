@@ -9,11 +9,21 @@ import QtQuick.Controls.Styles 1.4
 */
 
 ApplicationWindow {
+    id: loginDlg
     width: 440
     height: 330
     visible: true
     signal login
     flags: Qt.FramelessWindowHint
+
+    Timer {
+        id: timer
+        interval: 500
+        repeat: false
+        onTriggered: {
+            login()
+        }
+    }
 
     Image{
         id:image
@@ -31,8 +41,8 @@ ApplicationWindow {
         onPositionChanged: {//鼠标按下后位置改变
             var delta=Qt.point(mouse.x-cliCkPos.x,mouse.y-cliCkPos.y)
 
-            root.x=(root.x+delta.x) //mainWindow.x y 恒为0
-            root.y=(root.y+delta.y)
+            loginDlg.x=(loginDlg.x+delta.x) //mainWindow.x y 恒为0
+            loginDlg.y=(loginDlg.y+delta.y)
 
         }
     } //MouseArea end
@@ -221,11 +231,8 @@ ApplicationWindow {
                         hoverEnabled: true
                         onClicked: {
                             flip.flipped = !flip.flipped
-
                             console.log("username:" + "\n" + field.account+"\n" + "password:" + "\n" + field.password)
-                            login()
-//                            sceneTransition(loginDlg, centerWidget) //过渡动画
-
+                            timer.start();
                         }
                         onEntered: {
                             button.color="#3CC3F5"

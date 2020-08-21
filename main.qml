@@ -11,9 +11,10 @@ import "."
 ApplicationWindow {
     id: root
     visible: false
+    flags: Qt.FramelessWindowHint
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
-    flags: Qt.Window | Qt.FramelessWindowHint //need Qt.Window, because of the windows's statusBar need
+
     background: Rectangle {
         gradient: Gradient {
             GradientStop { position: 0; color: "#0d1725"}
@@ -24,27 +25,26 @@ ApplicationWindow {
     Loader {
         id: loader
         source: "qrc:/TimLogin.qml"
-        asynchronous: true
         visible: status === Loader.Ready
     }
 
     Connections {
         target: loader.item
         onLogin: {
-            root.visible = true
             loader.source = ""
+            root.visible = true
         }
     }
 
     PageIndicator {
-          id: indicator
+        id: indicator
 
-          count: swipeView.count
-          currentIndex: swipeView.currentIndex
+        count: swipeView.count
+        currentIndex: swipeView.currentIndex
 
-          anchors.bottom: swipeView.bottom
-          anchors.horizontalCenter: parent.horizontalCenter
-      }
+        anchors.bottom: swipeView.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
 
     header: Rectangle {
         id: titleBar
@@ -71,7 +71,6 @@ ApplicationWindow {
                 root.y=(root.y+delta.y)
             }
         }
-
 
         RowLayout {
             anchors.fill: parent
