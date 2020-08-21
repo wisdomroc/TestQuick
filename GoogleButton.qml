@@ -4,12 +4,12 @@ import QtQuick 2.0
 Rectangle {
     property string btnText: "click"//文本
     id: par
-    border.width: mouse.containsMouse? 2 : 0.5//按钮边框
-    border.color: mouse.containsMouse?"lightblue":"lightgray"
+    border.width: 2//按钮边框
+    border.color: mouse.containsMouse?"lightGray":"gray"
 
     implicitWidth: 80
     implicitHeight: 36
-    color: "Gray"
+    color: "#2c66a5"
     clip: true
     radius: 4
     Text {//按钮文字

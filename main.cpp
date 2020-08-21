@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     //向qml传递变量
     engine->rootContext()->setContextProperty("readerModel", readerModel);
     engine->rootContext()->setContextProperty("readerTableModel", readerTableModel);
-    engine->load(QUrl("qrc:/Login.qml"));
+    engine->load(QUrl("qrc:/main.qml"));
 
 
     int fontId = QFontDatabase::addApplicationFont(":/Font/fontawesome-webfont.ttf");
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QFont font;
     font.setFamily(fontFamilies.first());
     font.setPointSize(20);
-    app.setFont(font);
+//    app.setFont(font);
 
     return app.exec();
 }

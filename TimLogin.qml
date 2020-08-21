@@ -8,13 +8,16 @@ import QtQuick.Controls.Styles 1.4
 * 如何把边框搞成圆角矩形？？？？
 */
 
-Item {
+ApplicationWindow {
     width: 440
     height: 330
     visible: true
+    signal login
+    flags: Qt.FramelessWindowHint
+
     Image{
         id:image
-        source: "qrc:/images/background.png"
+        source: "qrc:/img/background.png"
         anchors.fill: parent
     }
 
@@ -48,18 +51,18 @@ Item {
             }
             Image{
                 id:pulldown
-                source: "qrc:/images/pulldown.png"
+                source: "qrc:/img/pulldown.png"
                 MouseArea{
                     anchors.fill: parent
                     onClicked:flip.flipped = !flip.flipped
                 }
             } // image end
             Image{
-                source: "qrc:/images/minu.png"
+                source: "qrc:/img/minu.png"
             }
             BackColor{
                 id:fork
-                source: "qrc:/images/fork.png"
+                source: "qrc:/img/fork.png"
                 MouseArea{
                     hoverEnabled: true
                     anchors.fill: parent
@@ -113,7 +116,7 @@ Item {
 
 
                     RadioImage{
-                        source: "qrc:/images/icon.jpg"
+                        source: "qrc:/img/icon.jpg"
                     }
                     Field{
                         id:field
@@ -153,12 +156,12 @@ Item {
                             }
                             Image{
                                 id:accountSuccess
-                                source: "qrc:/images/true.png"
+                                source: "qrc:/img/true.png"
                                 visible: false
                             }
                             Image{
                                 id:accountFail
-                                source: "qrc:/images/false.png"
+                                source: "qrc:/img/false.png"
                                 visible: false
                             }
                         }  //item end
@@ -184,12 +187,12 @@ Item {
                             }
                             Image{
                                 id:pwdSuccess
-                                source: "qrc:/images/true.png"
+                                source: "qrc:/img/true.png"
                                 visible: false
                             }
                             Image{
                                 id:pwdFail
-                                source: "qrc:/images/false.png"
+                                source: "qrc:/img/false.png"
                                 visible: false
                             }
                         }  //item end
@@ -220,7 +223,7 @@ Item {
                             flip.flipped = !flip.flipped
 
                             console.log("username:" + "\n" + field.account+"\n" + "password:" + "\n" + field.password)
-                            delayTimer.start();
+                            login()
 //                            sceneTransition(loginDlg, centerWidget) //过渡动画
 
                         }
@@ -235,7 +238,7 @@ Item {
             }//ColumnLayout end
             BackColor {
                 id: add
-                source: "qrc:/images/add.png"
+                source: "qrc:/img/add.png"
                 anchors{
                     left: item.left
                     leftMargin: 5
@@ -255,7 +258,7 @@ Item {
             } //BackColor end
             BackColor {
                 id: qr
-                source: "qrc:/images/qr.png"
+                source: "qrc:/img/qr.png"
                 anchors{
                     right: item.right
                     rightMargin: 5

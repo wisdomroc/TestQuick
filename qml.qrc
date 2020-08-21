@@ -1,40 +1,43 @@
 <RCC>
     <qresource prefix="/">
+        <file>img/flower.png</file>
+        <file>img/yuan.png</file>
+        <file>img/star.png</file>
+        <file>img/feather.jpg</file>
+        <file>img/lotus.png</file>
+        <file>img/add.png</file>
+        <file>img/false.png</file>
+        <file>img/fork.png</file>
+        <file>img/icon.jpg</file>
+        <file>img/minu.png</file>
+        <file>img/pulldown.png</file>
+        <file>img/qr.png</file>
+        <file>img/safe.png</file>
+        <file>img/true.png</file>
+        <file>img/background.png</file>
+        <file>img/check.png</file>
+        <file>img/off.png</file>
+        <file>img/on.png</file>
+        <file>img/uncheck.png</file>
         <file>main.qml</file>
         <file>DynamicText.qml</file>
         <file>TestBinding.qml</file>
         <file>RecipeList.qml</file>
         <file>QmlBusyIndicator.qml</file>
         <file>MyPartical.qml</file>
-        <file>images/flower.png</file>
-        <file>images/yuan.png</file>
-        <file>images/star.png</file>
-        <file>images/needle.png</file>
         <file>TSoundByte.qml</file>
-        <file>images/feather.jpg</file>
-        <file>images/lotus.png</file>
         <file>MyToggleButton.qml</file>
         <file>MyListView.qml</file>
         <file>Font/fontawesome-webfont.ttf</file>
         <file>Login.qml</file>
         <file>GoogleButton.qml</file>
-        <file>images/add.png</file>
-        <file>images/false.png</file>
-        <file>images/fork.png</file>
-        <file>images/icon.jpg</file>
-        <file>images/minu.png</file>
-        <file>images/pulldown.png</file>
-        <file>images/qr.png</file>
-        <file>images/safe.png</file>
-        <file>images/true.png</file>
         <file>RadioImage.qml</file>
         <file>TimLogin.qml</file>
         <file>Field.qml</file>
         <file>BackColor.qml</file>
         <file>StyleButton.qml</file>
-        <file>images/background.png</file>
         <file>MyTestRectangle.qml</file>
-        <file>main1.qml</file>
         <file>draw_and_pathView.qml</file>
+        <file>TreeView.qml</file>
     </qresource>
 </RCC>

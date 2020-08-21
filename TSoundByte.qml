@@ -8,7 +8,7 @@ Item {
     Component {
         id: soundComp
         Image {
-            source: "qrc:/images/flower.png"
+            source: "qrc:/img/flower.png"
             width: soundWidth
             height: soundHeight
         }
