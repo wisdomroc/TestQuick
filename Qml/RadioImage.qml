@@ -1,8 +1,8 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtGraphicalEffects 1.0
 //将方形图片处理成圆形
 Rectangle {
-    id: img
+    id: image
     //属性声明
     property alias source: _image.source
 

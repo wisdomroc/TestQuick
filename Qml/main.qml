@@ -12,8 +12,8 @@ ApplicationWindow {
     id: root
     visible: false
     flags: Qt.FramelessWindowHint
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
+    width: Screen.desktopAvailableWidth - 400
+    height: Screen.desktopAvailableHeight - 200
 
     background: Rectangle {
         gradient: Gradient {
@@ -24,7 +24,7 @@ ApplicationWindow {
 
     Loader {
         id: loader
-        source: "qrc:/TimLogin.qml"
+        source: "qrc:/Qml/TimLogin.qml"
         visible: status === Loader.Ready
     }
 
@@ -128,6 +128,7 @@ ApplicationWindow {
 
         Item {
             id: centerWidget
+
             ColumnLayout {
                 anchors.fill: parent
 
@@ -453,10 +454,10 @@ ApplicationWindow {
                     onClicked: item_tree.autoExpand=!item_tree.autoExpand
                 }
             }
-
-
         }
-
+        TestTable {
+            id: page5
+        }
     }
 
     function setTestDataA(){
@@ -559,7 +560,7 @@ ApplicationWindow {
         anchors.centerIn: parent
         ImageParticle
         {
-            source: "qrc:///img/flower.png"
+            source: "qrc:///Image/flower.png"
             colorVariation: 0.75
         }
 

@@ -9,10 +9,10 @@ Rectangle{
 
     property int spacing: 10    //项之间距离
     property int indent: 5      //子项缩进距离,注意实际还有icon的距离
-    property string onSrc: "qrc:/img/on.png"
-    property string offSrc: "qrc:/img/off.png"
-    property string checkedSrc: "qrc:/img/check.png"
-    property string uncheckSrc: "qrc:/img/uncheck.png"
+    property string onSrc: "qrc:/Image/on.png"
+    property string offSrc: "qrc:/Image/off.png"
+    property string checkedSrc: "qrc:/Image/check.png"
+    property string uncheckSrc: "qrc:/Image/uncheck.png"
 
     property var checkedArray: [] //当前已勾选的items
     property bool autoExpand: true

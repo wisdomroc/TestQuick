@@ -9,7 +9,7 @@ Rectangle {
         anchors.centerIn: parent
         Image {
             id: name
-            source: "qrc:/img/safe.png"
+            source: "qrc:/Image/safe.png"
         }
         Text {
             id: text

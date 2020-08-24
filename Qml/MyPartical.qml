@@ -15,9 +15,9 @@ ParticleSystem {
         // 发射器粒子图片
         property string particleColor: "red"
         // 发射器粒子颜色
-        property string particleImage: "qrc:///img/star.png"
+        property string particleImage: "qrc:///Image/star.png"
         // 发射器形状背景图片
-        property string maskBackground: "qrc:///img/yuan.png"
+        property string maskBackground: "qrc:///Image/yuan.png"
         // 发射器角度
         property real senderAngle: 90
         running: emitterStatus

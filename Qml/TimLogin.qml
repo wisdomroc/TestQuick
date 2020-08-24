@@ -27,7 +27,7 @@ ApplicationWindow {
 
     Image{
         id:image
-        source: "qrc:/img/background.png"
+        source: "qrc:/Image/background.png"
         anchors.fill: parent
     }
 
@@ -61,18 +61,18 @@ ApplicationWindow {
             }
             Image{
                 id:pulldown
-                source: "qrc:/img/pulldown.png"
+                source: "qrc:/Image/pulldown.png"
                 MouseArea{
                     anchors.fill: parent
                     onClicked:flip.flipped = !flip.flipped
                 }
             } // image end
             Image{
-                source: "qrc:/img/minu.png"
+                source: "qrc:/Image/minu.png"
             }
             BackColor{
                 id:fork
-                source: "qrc:/img/fork.png"
+                source: "qrc:/Image/fork.png"
                 MouseArea{
                     hoverEnabled: true
                     anchors.fill: parent
@@ -126,7 +126,7 @@ ApplicationWindow {
 
 
                     RadioImage{
-                        source: "qrc:/img/icon.jpg"
+                        source: "qrc:/Image/icon.jpg"
                     }
                     Field{
                         id:field
@@ -166,12 +166,12 @@ ApplicationWindow {
                             }
                             Image{
                                 id:accountSuccess
-                                source: "qrc:/img/true.png"
+                                source: "qrc:/Image/true.png"
                                 visible: false
                             }
                             Image{
                                 id:accountFail
-                                source: "qrc:/img/false.png"
+                                source: "qrc:/Image/false.png"
                                 visible: false
                             }
                         }  //item end
@@ -197,12 +197,12 @@ ApplicationWindow {
                             }
                             Image{
                                 id:pwdSuccess
-                                source: "qrc:/img/true.png"
+                                source: "qrc:/Image/true.png"
                                 visible: false
                             }
                             Image{
                                 id:pwdFail
-                                source: "qrc:/img/false.png"
+                                source: "qrc:/Image/false.png"
                                 visible: false
                             }
                         }  //item end
@@ -245,7 +245,7 @@ ApplicationWindow {
             }//ColumnLayout end
             BackColor {
                 id: add
-                source: "qrc:/img/add.png"
+                source: "qrc:/Image/add.png"
                 anchors{
                     left: item.left
                     leftMargin: 5
@@ -265,7 +265,7 @@ ApplicationWindow {
             } //BackColor end
             BackColor {
                 id: qr
-                source: "qrc:/img/qr.png"
+                source: "qrc:/Image/qr.png"
                 anchors{
                     right: item.right
                     rightMargin: 5
