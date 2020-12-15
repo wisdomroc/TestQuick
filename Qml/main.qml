@@ -1,19 +1,18 @@
-﻿import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Controls 1.0 as QC10
-import QtQuick.Controls.Styles 1.0 as QCS10
-import QtQuick.Layouts 1.0
+﻿import QtQuick 2.13
+import QtQuick.Window 2.2
+import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.11
-import QtQuick.Particles 2.0
+import QtQuick.Window 2.12
+import QtQuick.Particles 2.12
 import "."
 
 ApplicationWindow {
     id: root
-    visible: false
-    flags: Qt.FramelessWindowHint
-    width: Screen.desktopAvailableWidth - 400
-    height: Screen.desktopAvailableHeight - 200
+    visible: true
+    flags: Qt.Window | Qt.FramelessWindowHint
+    width: Screen.desktopAvailableWidth
+    height: Screen.desktopAvailableHeight
 
     background: Rectangle {
         gradient: Gradient {
@@ -24,7 +23,7 @@ ApplicationWindow {
 
     Loader {
         id: loader
-        source: "qrc:/Qml/TimLogin.qml"
+        source: ""  //qrc:/Qml/TimLogin.qml
         visible: status === Loader.Ready
     }
 
@@ -48,25 +47,17 @@ ApplicationWindow {
 
     header: Rectangle {
         id: titleBar
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            margins: 10
-        }
         height: 60
-
         color: "#2f2e4b"
-
         MouseArea{
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
-            property point cliCkPos: "0,0"
+            property point clickPos: "0,0"
             onPressed: {
-                cliCkPos=Qt.point(mouse.x,mouse.y) //得到鼠标的位置
+                clickPos=Qt.point(mouse.x,mouse.y) //得到鼠标的位置
             }
             onPositionChanged: {//鼠标按下后位置改变
-                var delta=Qt.point(mouse.x-cliCkPos.x,mouse.y-cliCkPos.y)
+                var delta=Qt.point(mouse.x-clickPos.x,mouse.y-clickPos.y)
                 root.x=(root.x+delta.x) //mainWindow.x y 恒为0
                 root.y=(root.y+delta.y)
             }
@@ -76,8 +67,23 @@ ApplicationWindow {
             anchors.fill: parent
             anchors.margins: 10
 
-            Item {
+            Rectangle {
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: "transparent"
+
+                Text {
+                    id: titleName
+                    anchors.fill: parent
+                    color: "white"
+                    text: swipeView.titleList[swipeView.currentIndex]
+                    verticalAlignment: Qt.AlignVCenter
+                    horizontalAlignment: Qt.AlignHCenter
+                    font{
+                        family: qsTr("微软雅黑")
+                        pixelSize: 20
+                    }
+                }
             }
 
             GoogleButton {
@@ -89,8 +95,10 @@ ApplicationWindow {
                 id: closeBtn
                 text: "关闭"
                 onClicked:Qt.quit()
-                font.pointSize: 12
-                font.family:"微软雅黑"
+                font{
+                    family: qsTr("微软雅黑")
+                    pointSize: 12
+                }
 
                 contentItem: Text {
                     text: closeBtn.text
@@ -104,7 +112,7 @@ ApplicationWindow {
 
                 background: Rectangle {
                     implicitWidth: 80
-                    implicitHeight: 36
+                    implicitHeight: 40
                     color: "#2c66a5"
                     border.width: 2//按钮边框
                     border.color: closeBtn.hovered ? "lightGray":"gray"
@@ -123,220 +131,172 @@ ApplicationWindow {
             bottom: parent.bottom
             margins: 10
         }
-
-        currentIndex: 1
-
+        currentIndex: 0
+        property var titleList: ["ListView & TableView Examples", "ListView Animation Examples", "TreeView Examples", "Test Examples"]
         Item {
-            id: centerWidget
-
-            ColumnLayout {
+            id: page0
+            RowLayout {
                 anchors.fill: parent
 
-
                 Rectangle {
-                    id: splitter
-                    Layout.fillWidth: true
-                    height: 2
-                    color: "black"
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
+                    id: listViewWrapper
                     Layout.fillHeight: true
-                    spacing: 20
+                    Layout.fillWidth: true
+                    border.width: 2
+                    border.color: recordListView.activeFocus ? "red" : "gray"
+                    radius: 5
 
-                    Rectangle {
-                        id: listViewWrapper
-                        width: 400
-                        Layout.fillHeight: true
-                        border.width: 2
-                        border.color: "steelBlue"
-                        radius: 5
-                        anchors.top: splitter.bottom
-                        anchors.topMargin: 20
-                        anchors.left: parent.left
-                        anchors.leftMargin: 20
+                    ListView {
+                        id: recordListView
+                        anchors.fill: parent
+                        anchors.margins: 10
+                        clip: true
+                        focus: true
+                        spacing: 10
+                        keyNavigationEnabled: true
+                        model: readerModel
+                        delegate: listdelegate
 
-                        ListView {
-                            id: recordView
-                            anchors.fill: parent
-                            anchors.margins: 6
-                            model: readerModel
-                            //            highlight: Rectangle { border.color: "red"; radius: 5 }
-                            focus: true
-                            spacing: 10
-                            delegate: listdelegate
+                        populate: Transition {
+                                  NumberAnimation { properties: "x,y"; duration: 1000 }
+                              }
 
-                            FontMetrics {
-                                id: fontMetrics
-                                font.family: "Microsoft Yahei"
-                                font.pointSize: 10
-                            }
+                        Component{
+                            id:listdelegate
+                            Rectangle{
+                                id: _listdelegate
+                                width: recordListView.width
+                                height:80
+                                radius: 5
+                                color: "lightGray"
+                                border.width: _listdelegate.ListView.isCurrentItem? 2: 1
+                                border.color:  _listdelegate.ListView.isCurrentItem? "red": "gray"
+                                Column {
+                                    spacing: 10
+                                    padding: 20
+                                    Text { text: '<b>ID:</b> ' + id; font: closeBtn.font }
+                                    Text { text: '<b>Password:</b> ' + password; font: closeBtn.font }
+                                }
 
-
-                            Component{
-                                id:listdelegate
-                                Rectangle{
-                                    id:delegateitem
-                                    width: recordView.width
-                                    height:fontMetrics.height
-                                    TextEdit { text: id + "\t\t\t" + password; font: fontMetrics.font; anchors.fill: parent;
-                                        readOnly: false
-                                        horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter;
-                                        color: delegateitem.ListView.isCurrentItem ? "red" : "gray"
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                    onClicked:{
+                                        _listdelegate.ListView.view.currentIndex = index
                                     }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                        onClicked:{
-                                            delegateitem.ListView.view.currentIndex = index
+                                    onPressed: {
+                                        if(mouse.button == Qt.RightButton)
+                                        {
+                                            contextMenu.popup()
                                         }
-                                        onPressed: {
-                                            if(mouse.button == Qt.RightButton)
-                                            {
-                                                contextMenu.popup()
-                                            }
-                                        }
-
                                     }
                                 }
                             }
-                        }
-                        Menu {
-                            id: contextMenu
-                            MenuItem { text: "Cut" }
-                            MenuItem { text: "Copy" }
-                            MenuItem { text: "Paste" }
                         }
                     }
 
+                    VScrollBar {
+                        id:scrollBar
+                        theList:recordListView
+                        width:6
+                        color:parent.color
+                    }
 
-                    Rectangle {
-                        width: 400
-                        Layout.fillHeight: true
-                        ColumnLayout {
-                            width: parent.width
-                            height: parent.height
-                            Rectangle {
-                                id: tableViewWrapper
-                                Layout.fillHeight: true
-                                width: parent.width
-                                border.width: 2
-                                border.color: "steelBlue"
-                                radius: 5
-
-                                QC10.TableView {
-
-                                    id :tableView
-                                    anchors.fill: parent
-                                    alternatingRowColors : false
-                                    selectionMode: 1
-                                    QC10.TableViewColumn {
-                                        id: checkedColumn
-                                        role: "id"
-                                        title: "Id"
-                                        width: tableView.viewport.width/tableView.columnCount
-                                    }
-                                    QC10.TableViewColumn {
-                                        role: "password"
-                                        title: "Password"
-                                        width: tableView.viewport.width/tableView.columnCount
-                                    }
-                                    model: readerTableModel
-
-                                    //自定义表头代理
-                                    headerDelegate:
-                                        Rectangle{
-                                        //color: "#00498C"
-                                        gradient: Gradient {
-                                            GradientStop { position: 0.0; color: "#085FB2" }
-                                            GradientStop { position: 1.0; color: "#00498C" }
-                                        }
-                                        //color : styleData.selected ? "blue": "darkgray"
-                                        width: 100;
-                                        height: 40
-                                        border.color: "black"
-                                        //border.width: 1
-                                        //radius: 5
-                                        Text
-                                        {
-                                            anchors.centerIn : parent
-                                            text: styleData.value
-                                            font.pixelSize: parent.height*0.5
-                                        }
-                                    }
-
-                                    //行代理可以修改行高等信息
-                                    rowDelegate: Rectangle {
-                                        height: 50
-                                        color: "#052641"
-                                        anchors.leftMargin: 2
-
-                                    }
-                                    itemDelegate: Rectangle{
-                                        border.width: 1
-                                        color : styleData.selected ? "#dd00498C": "#052641"
-
-                                        TextInput
-                                        {
-                                            anchors.fill: parent
-                                            text: styleData.value
-                                            verticalAlignment: Text.AlignVCenter
-                                            horizontalAlignment: Text.AlignHCenter
-                                            color: tableView.currentRow === styleData.row ? "red" : "green"
-                                            visible: styleData.column === 0
-                                            font.family: "Microsoft Yahei"
-                                            font.pointSize: 20
-                                        }
-                                        TextArea {
-                                            id: nameTextInput
-                                            anchors.fill: parent
-                                            horizontalAlignment: Text.AlignHCenter
-                                            verticalAlignment: Text.AlignVCenter
-                                            text: styleData.value
-                                            selectionColor: "#4283aa"
-                                            selectedTextColor: "#ffffff"
-                                            color: tableView.currentRow === styleData.row ? "red" : "green"
-                                            visible: styleData.column === 1
-                                            font.family: "Microsoft Yahei"
-                                            font.pointSize: 20
+                    Menu {
+                        id: contextMenu
+                        MenuItem { text: "Cut" }
+                        MenuItem { text: "Copy" }
+                        MenuItem { text: "Paste" }
+                    }
+                }
 
 
-                                            selectByMouse: true
-                                        }
-                                    }
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    border.width: 2
+                    border.color: tableView.activeFocus || addRowBtn.activeFocus || removeRowBtn.activeFocus ? "red" : "gray"
+                    radius: 5
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 10
+                        TableView {
+                            id :tableView
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
 
-                                    style: QCS10.TableViewStyle{
-                                        textColor: "white"
-                                        highlightedTextColor : "#00CCFE"  //选中的颜色
-                                        backgroundColor : "#052641"
+                                  columnSpacing: 1
+                                  rowSpacing: 1
+                                  clip: true
 
-                                    }
+
+
+
+
+
+                            model: readerTableModel
+
+                            //自定义表头代理
+//                            headerDelegate:
+//                                Rectangle{
+//                                //color: "#00498C"
+//                                gradient: Gradient {
+//                                    GradientStop { position: 0.0; color: "#085FB2" }
+//                                    GradientStop { position: 1.0; color: "#00498C" }
+//                                }
+//                                //color : styleData.selected ? "blue": "darkgray"
+//                                width: 100;
+//                                height: 40
+//                                border.color: "black"
+//                                //border.width: 1
+//                                //radius: 5
+//                                Text
+//                                {
+//                                    anchors.centerIn : parent
+//                                    text: styleData.value
+//                                    font.pixelSize: parent.height*0.5
+//                                }
+//                            }
+
+
+
+
+                            delegate: Rectangle {
+                                implicitWidth: 100
+                                implicitHeight: 50
+                                Text {
+                                    text: id + password
                                 }
                             }
 
-                            RowLayout {
-                                spacing: 10
-                                Button {
-                                    width: 120;
-                                    height: 30;
-                                    text: "Add Rows"
-                                    onClicked: {
-                                        console.log("Add Rows Btn Clicked ...")
-                                        readerTableModel.insertRows(2, 2);
+                        }
 
-                                    }
+                        RowLayout {
+                            Layout.fillWidth: true
+                            height: addRowBtn.height
+                            Button {
+                                id: addRowBtn
+                                width: 120;
+                                height: 30;
+                                text: "Add Rows"
+                                onClicked: {
+                                    console.log("Add Rows Btn Clicked ...")
+                                    readerTableModel.insertRows(2, 2);
+
                                 }
-                                Button {
-                                    width: 120;
-                                    height: 30;
-                                    text: "Remove Rows"
-                                    onClicked: {
-                                        console.log("Remove Rows Btn Clicked ...")
-                                        readerTableModel.removeRows(2,2);
-                                    }
+                            }
+                            Button {
+                                id:removeRowBtn
+                                width: 120;
+                                height: 30;
+                                text: "Remove Rows"
+                                onClicked: {
+                                    console.log("Remove Rows Btn Clicked ...")
+                                    readerTableModel.removeRows(2,2);
                                 }
+                            }
+                            Item {
+                                Layout.fillWidth: true
                             }
                         }
                     }
@@ -344,6 +304,7 @@ ApplicationWindow {
             }
         }
         Item {
+            id: page1
             Item {
                 width: parent.width / 2
                 height: parent.height
@@ -414,6 +375,7 @@ ApplicationWindow {
             }
         }
         Item {
+            id: page2
             TreeView {
                 id: item_tree
                 width: parent.width/2
@@ -456,7 +418,7 @@ ApplicationWindow {
             }
         }
         TestTable {
-            id: page5
+            id: page3
         }
     }
 

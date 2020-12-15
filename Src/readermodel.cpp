@@ -4,10 +4,12 @@
 ReaderModel::ReaderModel(QObject *parent):QAbstractListModel (parent)
 {
     Q_UNUSED(parent)
-    Reader *reader1 = new Reader("whp", "123456");
-    Reader *reader2 = new Reader("wl", "654321");
-    m_readers.append(reader1);
-    m_readers.append(reader2);
+
+    for(int i = 0; i < 10000; i ++)
+    {
+        Reader *reader = new Reader(tr("%1%2").arg(QString::fromLocal8Bit("张")).arg(i), "******");
+        m_readers.append(reader);
+    }
 }
 
 int ReaderModel::rowCount(const QModelIndex &parent) const

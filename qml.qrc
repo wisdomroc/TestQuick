@@ -30,5 +30,7 @@
         <file>Qml/Component/CTextButton.qml</file>
         <file>Qml/Component/CToolTip.qml</file>
         <file>Qml/Component/JsonPath.js</file>
+        <file>Qml/VScrollBar.qml</file>
+        <file>qtquickcontrol2.conf</file>
     </qresource>
 </RCC>

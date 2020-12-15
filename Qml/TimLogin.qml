@@ -111,13 +111,13 @@ ApplicationWindow {
                 RowLayout{
                     width: parent.width
                     spacing: 4
-                    anchors{
-                        top:layout.top
-                        topMargin: 10
-                        left: parent.left
-                        leftMargin: 38
-                        horizontalCenter: layout.horizontalCenter
-                    }
+//                    anchors{
+//                        top:layout.top
+//                        topMargin: 10
+//                        left: parent.left
+//                        leftMargin: 38
+//                        horizontalCenter: layout.horizontalCenter
+//                    }
 
 
 //                    Layout.topMargin: 10

@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     engine->rootContext()->setContextProperty("readerTableModel", readerTableModel);
     engine->load(QUrl("qrc:/Qml/main.qml"));
 
+
     //! 自定义字体
     /*
     int fontId = QFontDatabase::addApplicationFont(":/Font/fontawesome-webfont.ttf");
