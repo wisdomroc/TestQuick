@@ -84,6 +84,7 @@ Rectangle {
         id:listView
         anchors.fill: parent
         anchors.margins: 6
+        keyNavigationEnabled: true
         keyNavigationWraps: true
         model: listModel
         focus: true
@@ -109,9 +110,9 @@ Rectangle {
         delegate: Rectangle{
             width: listView.width
             height: 30
-            color: index % 2 ? "lightGray":"gray"
+            color: index % 2 ? "white":"gray"
             border.width: 2
-            border.color: listView.currentIndex == index ? "yellow" : "transparent"
+            border.color: listView.currentIndex == index ? "steelBlue" : "lightGray"
             Label{
                 id:txt
                 anchors.centerIn: parent

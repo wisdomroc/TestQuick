@@ -5,7 +5,7 @@ ReaderModel::ReaderModel(QObject *parent):QAbstractListModel (parent)
 {
     Q_UNUSED(parent)
 
-    for(int i = 0; i < 10000; i ++)
+    for(int i = 0; i < 3000; i ++)
     {
         Reader *reader = new Reader(tr("%1%2").arg(QString::fromLocal8Bit("张")).arg(i), "******");
         m_readers.append(reader);

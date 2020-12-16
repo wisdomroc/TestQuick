@@ -131,6 +131,7 @@ ApplicationWindow {
             bottom: parent.bottom
             margins: 10
         }
+        clip: true
         currentIndex: 0
         property var titleList: ["ListView & TableView Examples", "ListView Animation Examples", "TreeView Examples", "Test Examples"]
         Item {
@@ -158,8 +159,8 @@ ApplicationWindow {
                         delegate: listdelegate
 
                         populate: Transition {
-                                  NumberAnimation { properties: "x,y"; duration: 1000 }
-                              }
+                            NumberAnimation { properties: "x,y"; duration: 1000 }
+                        }
 
                         Component{
                             id:listdelegate
@@ -225,9 +226,9 @@ ApplicationWindow {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
 
-                                  columnSpacing: 1
-                                  rowSpacing: 1
-                                  clip: true
+                            columnSpacing: 1
+                            rowSpacing: 1
+                            clip: true
 
 
 
@@ -237,26 +238,26 @@ ApplicationWindow {
                             model: readerTableModel
 
                             //自定义表头代理
-//                            headerDelegate:
-//                                Rectangle{
-//                                //color: "#00498C"
-//                                gradient: Gradient {
-//                                    GradientStop { position: 0.0; color: "#085FB2" }
-//                                    GradientStop { position: 1.0; color: "#00498C" }
-//                                }
-//                                //color : styleData.selected ? "blue": "darkgray"
-//                                width: 100;
-//                                height: 40
-//                                border.color: "black"
-//                                //border.width: 1
-//                                //radius: 5
-//                                Text
-//                                {
-//                                    anchors.centerIn : parent
-//                                    text: styleData.value
-//                                    font.pixelSize: parent.height*0.5
-//                                }
-//                            }
+                            //                            headerDelegate:
+                            //                                Rectangle{
+                            //                                //color: "#00498C"
+                            //                                gradient: Gradient {
+                            //                                    GradientStop { position: 0.0; color: "#085FB2" }
+                            //                                    GradientStop { position: 1.0; color: "#00498C" }
+                            //                                }
+                            //                                //color : styleData.selected ? "blue": "darkgray"
+                            //                                width: 100;
+                            //                                height: 40
+                            //                                border.color: "black"
+                            //                                //border.width: 1
+                            //                                //radius: 5
+                            //                                Text
+                            //                                {
+                            //                                    anchors.centerIn : parent
+                            //                                    text: styleData.value
+                            //                                    font.pixelSize: parent.height*0.5
+                            //                                }
+                            //                            }
 
 
 
@@ -305,34 +306,98 @@ ApplicationWindow {
         }
         Item {
             id: page1
-            Item {
-                width: parent.width / 2
-                height: parent.height
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 6
+            RowLayout {
+                anchors.fill: parent
+
+                Rectangle {
+                      width: 180; height: 200
+
+                      Component {
+                          id: contactDelegate
+                          Item {
+                              width: 180; height: 40
+                              Column {
+                                  Text { text: '<b>Name:</b> ' + name }
+                                  Text { text: '<b>Number:</b> ' + number }
+                              }
+                          }
+                      }
+
+                      ListView {
+                          anchors.fill: parent
+                          model: ListModel {
+                              ListElement {
+                                  name: "Bill Smith"
+                                  number: "555 3264"
+                              }
+                              ListElement {
+                                  name: "John Brown"
+                                  number: "555 8426"
+                              }
+                              ListElement {
+                                  name: "Sam Wise"
+                                  number: "555 0473"
+                              }
+                          }
+                          delegate: contactDelegate
+                          highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                          focus: true
+                      }
+                  }
+
+
+                ListView {
+                    width: 200
+                    Layout.fillHeight: true
+
+                    focus: true
+                    highlight: Rectangle {
+                        border.width: 3
+                        border.color: "red"
+
+                    }
+
+                    model: ListModel {
+                        ListElement {name : "张三"}
+                        ListElement {name : "李四"}
+                        ListElement {name : "王五"}
+                        ListElement {name : "赵六"}
+                    }
+                    delegate: Rectangle {
+                        id: page1Del
+                        width: 200
+                        height: 30
+                        color: page1Del.ListView.isCurrentItem ? "gray" : "lightGray"
+                        Text {
+                            anchors.fill: parent
+                            text: name
+                            font.family: qsTr("微软雅黑")
+                            font.pixelSize: 20
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: page1Del.ListView.view.currentIndex = index
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
                     MyListView {
                         id: myListView
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-
                         Component.onCompleted: myListView.initData(10)
                     }
 
-                    ColumnLayout {
+                    RowLayout {
+                        Layout.alignment: Qt.AlignBottom
                         Button {
                             id: addBtn
                             text: "Add"
                             onClicked: {
-                                myListView.addOneRecord({'name': String(myListView.model.count)})
-                                if(longWidth)
-                                {
-                                    longWidth = false
-                                }
-                                else
-                                {
-                                    longWidth = true
-                                }
+                                myListView.addOneRecord({'name': String("Row" + myListView.model.count)})
                             }
                         }
                         Button {
@@ -343,34 +408,6 @@ ApplicationWindow {
                             }
                         }
                     }
-
-
-                    states: [
-                        State {
-                            name: "state_long"
-                            when: longWidth
-                            PropertyChanges {
-                                target: addBtn
-                                width: 200
-                            }
-                            PropertyChanges {
-                                target: deleteBtn
-                                width: 200
-                            }
-                        }
-
-                    ]
-
-                    transitions: [
-                        Transition {
-                            from: "*"
-                            to: "*"
-                            SequentialAnimation {
-                                PropertyAnimation {target: addBtn; property: "width"; duration: 200;}
-                                PropertyAnimation {target: deleteBtn; property: "width"; duration: 200;}
-                            }
-                        }
-                    ]
                 }
             }
         }
