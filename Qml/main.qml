@@ -132,8 +132,8 @@ ApplicationWindow {
             margins: 10
         }
         clip: true
-        currentIndex: 0
-        property var titleList: ["ListView & TableView Examples", "ListView Animation Examples", "TreeView Examples", "Test Examples"]
+        currentIndex: 1
+        property var titleList: ["ListView & TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
         Item {
             id: page0
             RowLayout {
@@ -184,6 +184,7 @@ ApplicationWindow {
                                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                                     onClicked:{
                                         _listdelegate.ListView.view.currentIndex = index
+                                        _listdelegate.ListView.view.forceActiveFocus()
                                     }
                                     onPressed: {
                                         if(mouse.button == Qt.RightButton)
@@ -306,106 +307,31 @@ ApplicationWindow {
         }
         Item {
             id: page1
-            RowLayout {
+            ColumnLayout {
                 anchors.fill: parent
-
-                Rectangle {
-                      width: 180; height: 200
-
-                      Component {
-                          id: contactDelegate
-                          Item {
-                              width: 180; height: 40
-                              Column {
-                                  Text { text: '<b>Name:</b> ' + name }
-                                  Text { text: '<b>Number:</b> ' + number }
-                              }
-                          }
-                      }
-
-                      ListView {
-                          anchors.fill: parent
-                          model: ListModel {
-                              ListElement {
-                                  name: "Bill Smith"
-                                  number: "555 3264"
-                              }
-                              ListElement {
-                                  name: "John Brown"
-                                  number: "555 8426"
-                              }
-                              ListElement {
-                                  name: "Sam Wise"
-                                  number: "555 0473"
-                              }
-                          }
-                          delegate: contactDelegate
-                          highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-                          focus: true
-                      }
-                  }
-
-
-                ListView {
-                    width: 200
+                MyListView {
+                    id: myListView
+                    width: 600
                     Layout.fillHeight: true
-
-                    focus: true
-                    highlight: Rectangle {
-                        border.width: 3
-                        border.color: "red"
-
-                    }
-
-                    model: ListModel {
-                        ListElement {name : "张三"}
-                        ListElement {name : "李四"}
-                        ListElement {name : "王五"}
-                        ListElement {name : "赵六"}
-                    }
-                    delegate: Rectangle {
-                        id: page1Del
-                        width: 200
-                        height: 30
-                        color: page1Del.ListView.isCurrentItem ? "gray" : "lightGray"
-                        Text {
-                            anchors.fill: parent
-                            text: name
-                            font.family: qsTr("微软雅黑")
-                            font.pixelSize: 20
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: page1Del.ListView.view.currentIndex = index
-                        }
+                    Component.onCompleted: {
+                        myListView.initData(10)
                     }
                 }
 
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    MyListView {
-                        id: myListView
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        Component.onCompleted: myListView.initData(10)
-                    }
-
-                    RowLayout {
-                        Layout.alignment: Qt.AlignBottom
-                        Button {
-                            id: addBtn
-                            text: "Add"
-                            onClicked: {
-                                myListView.addOneRecord({'name': String("Row" + myListView.model.count)})
-                            }
+                RowLayout {
+                    Layout.alignment: Qt.AlignBottom
+                    Button {
+                        id: addBtn
+                        text: "Add"
+                        onClicked: {
+                            myListView.addOneRecord({'name': String("Construc Info " + myListView.model.count)})
                         }
-                        Button {
-                            id: deleteBtn
-                            text: "Delete"
-                            onClicked: {
-                                myListView.deleteOneRecord(myListView.view.currentIndex)
-                            }
+                    }
+                    Button {
+                        id: deleteBtn
+                        text: "Delete"
+                        onClicked: {
+                            myListView.deleteOneRecord(myListView.view.currentIndex)
                         }
                     }
                 }

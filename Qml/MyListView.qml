@@ -4,47 +4,20 @@ import QtQml.Models 2.11
 import QtQuick.Layouts 1.0
 
 Rectangle {
-    id: listViewWrapper
     property bool refreshFlag: false
-    property alias model: listModel
-    property alias view: listView
+    property alias model: _listModel
+    property alias view: _listView
 
     radius: 5
     border.width: 2
-    border.color: listView.activeFocus ? "blue" : "gray"
+    border.color: _listView.activeFocus ? "yellow" : "gray"
 
-    activeFocusOnTab: true
-    onFocusChanged: {
-        listView.forceActiveFocus()
-    }
-
-
-
-    function initData(count) {
-        var i = 0;
-        while(i < count)
-        {
-            var info = {'name': "Row" + i}
-            listModel.append(info)
-            i ++
-        }
-    }
-
-    function addOneRecord(num) {
-        listModel.append(num)
-    }
-
-    function deleteOneRecord(index) {
-        listModel.remove(index)
-        console.log("listModel remove index: " + index)
-    }
-
-
-
+    // 下拉刷新功能的实现代码
     Rectangle{
         width: parent.width
-        height: -listView.contentY
-        color: "cyan"
+        height: Math.max(-_listView.contentY, 30)
+        y: _listView.contentY +30>0 ?   -(_listView.contentY +30) : 0
+        color: "steelBlue"
         ColumnLayout {
             anchors.fill: parent
             Item {
@@ -52,10 +25,11 @@ Rectangle {
             }
 
             Label{
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.alignment: Qt.AlignHCenter
                 text:qsTr("下拉刷新")
-                font.pointSize: 14
-                visible: listView.contentY
+                font.family: "微软雅黑"
+                font.pointSize: 16
+                color: "white"
             }
         }
     }
@@ -77,22 +51,20 @@ Rectangle {
     }
 
     ListModel {
-        id: listModel
+        id: _listModel
     }
 
     ListView{
-        id:listView
+        id:_listView
         anchors.fill: parent
         anchors.margins: 6
         keyNavigationEnabled: true
         keyNavigationWraps: true
-        model: listModel
+        model: _listModel
         focus: true
-        //! 可以用于切换界面的切换
-        //orientation: ListView.Horizontal
 
         onContentYChanged: {
-            if(-contentY > 40){
+            if(contentY < -40){
                 refreshFlag = true
             }
         }
@@ -108,25 +80,55 @@ Rectangle {
         }
 
         delegate: Rectangle{
-            width: listView.width
+            width: _listView.width
             height: 30
-            color: index % 2 ? "white":"gray"
-            border.width: 2
-            border.color: listView.currentIndex == index ? "steelBlue" : "lightGray"
+            border.width: _listView.currentIndex == index ? 2 : 1
+            border.color: _listView.currentIndex == index ? "steelBlue" : "gray"
             Label{
-                id:txt
                 anchors.centerIn: parent
                 font.pointSize: 20
                 text: name
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: listView.currentIndex = index
+                onClicked: {
+                    _listView.currentIndex = index
+                    _listView.forceActiveFocus()
+                }
             }
+        }
+
+        populate: Transition {
+            NumberAnimation { properties: "x, y"; duration: 300 }
+        }
+
+        add: Transition {
+            PropertyAction { properties: "transformOrigin"; value: Item.TopLeft }
+            NumberAnimation { properties: "scale"; from: 0; to: 1.0; duration: 1000}
+            NumberAnimation { properties: "opacity"; from: 0; to: 1.0; duration: 1000}
+        }
+
+        displaced: Transition {
+            PropertyAction { properties: "opacity, scale"; value: 1 }
+            NumberAnimation { properties: "x, y"; duration: 1000 }
         }
     }
 
+    function initData(count) {
+        var i = 0;
+        while(i < count)
+        {
+            var info = {'name': "Construc Info " + i}
+            _listModel.append(info)
+            i ++
+        }
+    }
 
+    function addOneRecord(info) {
+        _listModel.append(info)
+    }
 
-
+    function deleteOneRecord(index) {
+        _listModel.remove(index)
+    }
 }
