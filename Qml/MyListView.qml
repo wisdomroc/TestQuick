@@ -9,8 +9,8 @@ Rectangle {
     property alias view: _listView
 
     radius: 5
-    border.width: 2
-    border.color: _listView.activeFocus ? "yellow" : "gray"
+    border.width: 3
+    border.color: _listView.activeFocus ? "lightGreen" : "gray"
 
     // 下拉刷新功能的实现代码
     Rectangle{
@@ -52,6 +52,16 @@ Rectangle {
 
     ListModel {
         id: _listModel
+        ListElement { name: "ConstructInfo 0" }
+        ListElement { name: "ConstructInfo 1" }
+        ListElement { name: "ConstructInfo 2" }
+        ListElement { name: "ConstructInfo 3" }
+        ListElement { name: "ConstructInfo 4" }
+        ListElement { name: "ConstructInfo 5" }
+        ListElement { name: "ConstructInfo 6" }
+        ListElement { name: "ConstructInfo 7" }
+        ListElement { name: "ConstructInfo 8" }
+        ListElement { name: "ConstructInfo 9" }
     }
 
     ListView{
@@ -61,7 +71,7 @@ Rectangle {
         keyNavigationEnabled: true
         keyNavigationWraps: true
         model: _listModel
-        focus: true
+        clip: true
 
         onContentYChanged: {
             if(contentY < -40){
@@ -82,8 +92,10 @@ Rectangle {
         delegate: Rectangle{
             width: _listView.width
             height: 30
-            border.width: _listView.currentIndex == index ? 2 : 1
-            border.color: _listView.currentIndex == index ? "steelBlue" : "gray"
+            radius: 5
+            border.color: "white"
+            border.width: 1
+            color: _listView.currentIndex === index ? "lightGreen" : "steelBlue"
             Label{
                 anchors.centerIn: parent
                 font.pointSize: 20
@@ -91,9 +103,15 @@ Rectangle {
             }
             MouseArea {
                 anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
                     _listView.currentIndex = index
                     _listView.forceActiveFocus()
+                    if(mouse.button === Qt.RightButton)
+                    {
+                        console.log("rightBtn click...")
+                        contextMenu.popup()
+                    }
                 }
             }
         }
@@ -114,14 +132,28 @@ Rectangle {
         }
     }
 
+    VScrollBar {
+        id:scrollBar
+        theList:_listView
+        width:6
+        color:parent.color
+    }
+
+    Menu {
+        id: contextMenu
+        MenuItem { text: "Cut" }
+        MenuItem { text: "Copy" }
+        MenuItem { text: "Paste" }
+    }
+
     function initData(count) {
-        var i = 0;
-        while(i < count)
-        {
-            var info = {'name': "Construc Info " + i}
-            _listModel.append(info)
-            i ++
-        }
+        //        var i = 0;
+        //        while(i < count)
+        //        {
+        //            var info = {'name': "Construc Info " + i}
+        //            _listModel.append(info)
+        //            i ++
+        //        }
     }
 
     function addOneRecord(info) {

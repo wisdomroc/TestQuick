@@ -133,85 +133,11 @@ ApplicationWindow {
         }
         clip: true
         currentIndex: 1
-        property var titleList: ["ListView & TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
+        property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
         Item {
             id: page0
             RowLayout {
                 anchors.fill: parent
-
-                Rectangle {
-                    id: listViewWrapper
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    border.width: 2
-                    border.color: recordListView.activeFocus ? "red" : "gray"
-                    radius: 5
-
-                    ListView {
-                        id: recordListView
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        clip: true
-                        focus: true
-                        spacing: 10
-                        keyNavigationEnabled: true
-                        model: readerModel
-                        delegate: listdelegate
-
-                        populate: Transition {
-                            NumberAnimation { properties: "x,y"; duration: 1000 }
-                        }
-
-                        Component{
-                            id:listdelegate
-                            Rectangle{
-                                id: _listdelegate
-                                width: recordListView.width
-                                height:80
-                                radius: 5
-                                color: "lightGray"
-                                border.width: _listdelegate.ListView.isCurrentItem? 2: 1
-                                border.color:  _listdelegate.ListView.isCurrentItem? "red": "gray"
-                                Column {
-                                    spacing: 10
-                                    padding: 20
-                                    Text { text: '<b>ID:</b> ' + id; font: closeBtn.font }
-                                    Text { text: '<b>Password:</b> ' + password; font: closeBtn.font }
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                    onClicked:{
-                                        _listdelegate.ListView.view.currentIndex = index
-                                        _listdelegate.ListView.view.forceActiveFocus()
-                                    }
-                                    onPressed: {
-                                        if(mouse.button == Qt.RightButton)
-                                        {
-                                            contextMenu.popup()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    VScrollBar {
-                        id:scrollBar
-                        theList:recordListView
-                        width:6
-                        color:parent.color
-                    }
-
-                    Menu {
-                        id: contextMenu
-                        MenuItem { text: "Cut" }
-                        MenuItem { text: "Copy" }
-                        MenuItem { text: "Paste" }
-                    }
-                }
-
 
                 Rectangle {
                     Layout.fillWidth: true
@@ -239,26 +165,26 @@ ApplicationWindow {
                             model: readerTableModel
 
                             //自定义表头代理
-                            //                            headerDelegate:
-                            //                                Rectangle{
-                            //                                //color: "#00498C"
-                            //                                gradient: Gradient {
-                            //                                    GradientStop { position: 0.0; color: "#085FB2" }
-                            //                                    GradientStop { position: 1.0; color: "#00498C" }
-                            //                                }
-                            //                                //color : styleData.selected ? "blue": "darkgray"
-                            //                                width: 100;
-                            //                                height: 40
-                            //                                border.color: "black"
-                            //                                //border.width: 1
-                            //                                //radius: 5
-                            //                                Text
-                            //                                {
-                            //                                    anchors.centerIn : parent
-                            //                                    text: styleData.value
-                            //                                    font.pixelSize: parent.height*0.5
-                            //                                }
-                            //                            }
+//                                                        headerDelegate:
+//                                                            Rectangle{
+//                                                            //color: "#00498C"
+//                                                            gradient: Gradient {
+//                                                                GradientStop { position: 0.0; color: "#085FB2" }
+//                                                                GradientStop { position: 1.0; color: "#00498C" }
+//                                                            }
+//                                                            //color : styleData.selected ? "blue": "darkgray"
+//                                                            width: 100;
+//                                                            height: 40
+//                                                            border.color: "black"
+//                                                            //border.width: 1
+//                                                            //radius: 5
+//                                                            Text
+//                                                            {
+//                                                                anchors.centerIn : parent
+//                                                                text: styleData.value
+//                                                                font.pixelSize: parent.height*0.5
+//                                                            }
+//                                                        }
 
 
 
