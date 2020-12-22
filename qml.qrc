@@ -9,8 +9,6 @@
         <file>Qml/main.qml</file>
         <file>Qml/MyListView.qml</file>
         <file>Qml/MyPartical.qml</file>
-        <file>Qml/MyToggleButton.qml</file>
-        <file>Qml/QmlBusyIndicator.qml</file>
         <file>Qml/RadioImage.qml</file>
         <file>Qml/RecipeList.qml</file>
         <file>Qml/StyleButton.qml</file>
@@ -32,5 +30,6 @@
         <file>Qml/VScrollBar.qml</file>
         <file>qtquickcontrol2.conf</file>
         <file>Qml/Component/MyToggleButton.qml</file>
+        <file>Qml/Component/MyBusyIndicator.qml</file>
     </qresource>
 </RCC>

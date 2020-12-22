@@ -35,6 +35,13 @@ ApplicationWindow {
         }
     }
 
+    QmlBusyIndicator {
+        width: 200
+        height: 200
+        anchors.centerIn: parent
+        z: 10
+    }
+
     PageIndicator {
         id: indicator
 
