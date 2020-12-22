@@ -1,4 +1,7 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
+/**
+  *配合MouseArea组合成 带一个图片作为底色&有外框 的Button*
+  **/
 
 Item {
     property alias visibleRec: rec.visible
