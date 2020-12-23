@@ -90,12 +90,15 @@ Rectangle {
         }
 
         delegate: Rectangle{
+            id: _listViewDelegate
             width: _listView.width
             height: 30
             radius: 5
             border.color: "white"
             border.width: 1
-            color: _listView.currentIndex === index ? "lightGreen" : "steelBlue"
+            color: ListView.isCurrentItem ? "lightGreen" : "steelBlue"
+            //或者使用下面的方式
+            //color: _listView.currentIndex === index ? "lightGreen" : "steelBlue"
             Label{
                 anchors.centerIn: parent
                 font.pointSize: 20

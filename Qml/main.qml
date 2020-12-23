@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Window 2.12
 import QtQuick.Particles 2.12
 import "."
+import "Component"
 
 ApplicationWindow {
     id: root
@@ -35,11 +36,12 @@ ApplicationWindow {
         }
     }
 
-    QmlBusyIndicator {
+    MyBusyIndicator {
         width: 200
         height: 200
         anchors.centerIn: parent
         z: 10
+        visible: false
     }
 
     PageIndicator {
