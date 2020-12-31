@@ -248,8 +248,9 @@ ApplicationWindow {
                     id: myListView
                     width: 600
                     Layout.fillHeight: true
+                    focus: true
                     Component.onCompleted: {
-                        myListView.initData(10)
+                        myListView.initData(10000)
                     }
                 }
 

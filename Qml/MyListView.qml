@@ -5,18 +5,18 @@ import QtQuick.Layouts 1.0
 
 Rectangle {
     property bool refreshFlag: false
-    property alias model: _listModel
-    property alias view: _listView
+    property alias model: __listModel
+    property alias view: __listView
 
     radius: 5
     border.width: 3
-    border.color: _listView.activeFocus ? "lightGreen" : "gray"
+    border.color: __listView.activeFocus ? "lightGreen" : "gray"
 
     // 下拉刷新功能的实现代码
     Rectangle{
         width: parent.width
-        height: Math.max(-_listView.contentY, 30)
-        y: _listView.contentY +30>0 ?   -(_listView.contentY +30) : 0
+        height: Math.max(-__listView.contentY, 30)
+        y: __listView.contentY +30>0 ?   -(__listView.contentY +30) : 0
         color: "steelBlue"
         ColumnLayout {
             anchors.fill: parent
@@ -51,27 +51,20 @@ Rectangle {
     }
 
     ListModel {
-        id: _listModel
-        ListElement { name: "ConstructInfo 0" }
-        ListElement { name: "ConstructInfo 1" }
-        ListElement { name: "ConstructInfo 2" }
-        ListElement { name: "ConstructInfo 3" }
-        ListElement { name: "ConstructInfo 4" }
-        ListElement { name: "ConstructInfo 5" }
-        ListElement { name: "ConstructInfo 6" }
-        ListElement { name: "ConstructInfo 7" }
-        ListElement { name: "ConstructInfo 8" }
-        ListElement { name: "ConstructInfo 9" }
+        id: __listModel
     }
 
     ListView{
-        id:_listView
+        id:__listView
         anchors.fill: parent
         anchors.margins: 6
         keyNavigationEnabled: true
         keyNavigationWraps: true
-        model: _listModel
+        model: __listModel
+        spacing: 10
         clip: true
+        cacheBuffer: 20
+        focus: true
 
         onContentYChanged: {
             if(contentY < -40){
@@ -90,15 +83,15 @@ Rectangle {
         }
 
         delegate: Rectangle{
-            id: _listViewDelegate
-            width: _listView.width
-            height: 30
+            id: __listViewDelegate
+            width: __listView.width
+            height: 60
             radius: 5
             border.color: "white"
             border.width: 1
             color: ListView.isCurrentItem ? "lightGreen" : "steelBlue"
             //或者使用下面的方式
-            //color: _listView.currentIndex === index ? "lightGreen" : "steelBlue"
+            //color: __listView.currentIndex === index ? "lightGreen" : "steelBlue"
             Label{
                 anchors.centerIn: parent
                 font.pointSize: 20
@@ -108,8 +101,8 @@ Rectangle {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
-                    _listView.currentIndex = index
-                    _listView.forceActiveFocus()
+                    __listView.currentIndex = index
+                    __listView.forceActiveFocus()
                     if(mouse.button === Qt.RightButton)
                     {
                         console.log("rightBtn click...")
@@ -117,6 +110,8 @@ Rectangle {
                     }
                 }
             }
+            Component.onDestruction: console.log("ListModel " + index + "destroyed...")
+            Component.onCompleted: console.log("ListModel " + index + "created...")
         }
 
         populate: Transition {
@@ -137,7 +132,7 @@ Rectangle {
 
     VScrollBar {
         id:scrollBar
-        theList:_listView
+        theList:__listView
         width:6
         color:parent.color
     }
@@ -150,20 +145,22 @@ Rectangle {
     }
 
     function initData(count) {
-        //        var i = 0;
-        //        while(i < count)
-        //        {
-        //            var info = {'name': "Construc Info " + i}
-        //            _listModel.append(info)
-        //            i ++
-        //        }
+        var i = 0;
+        while(i < count)
+        {
+            var info = {'name': "Construct Info " + i}
+            __listModel.append(info)
+            i ++
+        }
     }
 
     function addOneRecord(info) {
-        _listModel.append(info)
+        __listModel.append(info)
     }
 
     function deleteOneRecord(index) {
-        _listModel.remove(index)
+        __listModel.remove(index)
     }
 }
+
+
