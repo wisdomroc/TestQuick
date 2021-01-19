@@ -250,7 +250,7 @@ ApplicationWindow {
                     Layout.fillHeight: true
                     focus: true
                     Component.onCompleted: {
-                        myListView.initData(10000)
+                        myListView.initData(100)
                     }
                 }
 
@@ -260,7 +260,8 @@ ApplicationWindow {
                         id: addBtn
                         text: "Add"
                         onClicked: {
-                            myListView.addOneRecord({'name': String("Construc Info " + myListView.model.count)})
+                            myListView.insertOneRecord(myListView.view.currentIndex + 1, {'name': String("Construc Info " + myListView.model.count)})
+                            myListView.view.currentIndex = myListView.view.currentIndex + 1
                         }
                     }
                     Button {
@@ -268,6 +269,13 @@ ApplicationWindow {
                         text: "Delete"
                         onClicked: {
                             myListView.deleteOneRecord(myListView.view.currentIndex)
+                        }
+                    }
+                    Button {
+                        id: moveDownBtn
+                        text: "Move Down"
+                        onClicked: {
+                            myListView.moveDown()
                         }
                     }
                 }

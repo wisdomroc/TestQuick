@@ -7,6 +7,7 @@ Rectangle {
     property bool refreshFlag: false
     property alias model: __listModel
     property alias view: __listView
+    property alias currentIndex: __listView.currentIndex
 
     radius: 5
     border.width: 3
@@ -114,19 +115,30 @@ Rectangle {
             Component.onCompleted: console.log("ListModel " + index + "created...")
         }
 
-        populate: Transition {
-            NumberAnimation { properties: "x, y"; duration: 300 }
-        }
-
         add: Transition {
-            PropertyAction { properties: "transformOrigin"; value: Item.TopLeft }
-            NumberAnimation { properties: "scale"; from: 0; to: 1.0; duration: 1000}
+            NumberAnimation { properties: "y"; from: 0; duration: 1000}
             NumberAnimation { properties: "opacity"; from: 0; to: 1.0; duration: 1000}
         }
 
         displaced: Transition {
-            PropertyAction { properties: "opacity, scale"; value: 1 }
-            NumberAnimation { properties: "x, y"; duration: 1000 }
+            SpringAnimation { properties: "y"; spring: 2; damping: 0.5; epsilon: 0.25 }
+        }
+
+        remove: Transition {
+            SequentialAnimation {
+                PropertyAction { properties: "transformOrigin"; value:Item.TopLeft }
+                NumberAnimation { properties: "scale"; to: 0; duration: 1000 }
+                NumberAnimation { properties: "opacity"; to: 0; duration: 1000 }
+            }
+        }
+
+        move: Transition {
+            NumberAnimation { properties: "y"; duration: 1000; easing.type: Easing.OutQuart }
+        }
+
+        /* 在ListView第一次实例化或者因Model变化而需要创建Item时应用 */
+        populate: Transition {
+            NumberAnimation { properties: "y"; duration: 1000 }
         }
     }
 
@@ -154,12 +166,18 @@ Rectangle {
         }
     }
 
-    function addOneRecord(info) {
-        __listModel.append(info)
+    function insertOneRecord(index, info) {
+        __listModel.insert(index, info)
     }
 
     function deleteOneRecord(index) {
         __listModel.remove(index)
+    }
+
+    function moveDown() {
+        if(currentIndex + 1 < model.count) {
+            model.move(currentIndex, currentIndex + 1, 1)
+        }
     }
 }
 
