@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.13
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.5
+import QtQuick.Controls 1.2 as QC12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.12
@@ -145,101 +146,58 @@ ApplicationWindow {
         property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
         Item {
             id: page0
-            RowLayout {
-                anchors.fill: parent
+            MyTableView {
+                id: myTableView
+                anchors.centerIn: parent
+            }
 
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    border.width: 2
-                    border.color: tableView.activeFocus || addRowBtn.activeFocus || removeRowBtn.activeFocus ? "red" : "gray"
-                    radius: 5
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        TableView {
-                            id :tableView
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
+            TagLine {
+                id: myTagLine
+            }
 
-                            columnSpacing: 1
-                            rowSpacing: 1
-                            clip: true
+            Rectangle {
+                id: leftBottomRect
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                width: 200
+                height: 200
+                border.width: 1
+                border.color: "black"
+                gradient: Gradient {
+                    GradientStop { position: 0; color: "gray" }
+                    GradientStop { position: 1; color: "steelBlue" }
+                }
 
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("点击可以展示“动态标注线”")
+                }
 
-
-
-
-
-                            model: readerTableModel
-
-                            //自定义表头代理
-//                                                        headerDelegate:
-//                                                            Rectangle{
-//                                                            //color: "#00498C"
-//                                                            gradient: Gradient {
-//                                                                GradientStop { position: 0.0; color: "#085FB2" }
-//                                                                GradientStop { position: 1.0; color: "#00498C" }
-//                                                            }
-//                                                            //color : styleData.selected ? "blue": "darkgray"
-//                                                            width: 100;
-//                                                            height: 40
-//                                                            border.color: "black"
-//                                                            //border.width: 1
-//                                                            //radius: 5
-//                                                            Text
-//                                                            {
-//                                                                anchors.centerIn : parent
-//                                                                text: styleData.value
-//                                                                font.pixelSize: parent.height*0.5
-//                                                            }
-//                                                        }
-
-
-
-
-                            delegate: Rectangle {
-                                implicitWidth: 100
-                                implicitHeight: 50
-                                Text {
-                                    text: id + password
-                                }
-                            }
-
-                        }
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            height: addRowBtn.height
-                            Button {
-                                id: addRowBtn
-                                width: 120;
-                                height: 30;
-                                text: "Add Rows"
-                                onClicked: {
-                                    console.log("Add Rows Btn Clicked ...")
-                                    readerTableModel.insertRows(2, 2);
-
-                                }
-                            }
-                            Button {
-                                id:removeRowBtn
-                                width: 120;
-                                height: 30;
-                                text: "Remove Rows"
-                                onClicked: {
-                                    console.log("Remove Rows Btn Clicked ...")
-                                    readerTableModel.removeRows(2,2);
-                                }
-                            }
-                            Item {
-                                Layout.fillWidth: true
-                            }
-                        }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        myTagLine.startPoint = Qt.point(parent.width / 2, parent.height / 2)
+                        myTagLine.endPoint = Qt.point(50, 50)
                     }
                 }
             }
+
+            AmazingText {
+                anchors.bottom: leftBottomRect.top
+                anchors.left: parent.left
+                anchors.margins: 10
+            }
+
+            MyFlowText {
+
+            }
+
+            MyDateEdit {
+                x: 200
+                y: 500
+            }
         }
+
         Item {
             id: page1
             ColumnLayout {
@@ -470,4 +428,3 @@ ApplicationWindow {
         emitter.enabled = true;
     }
 }
-

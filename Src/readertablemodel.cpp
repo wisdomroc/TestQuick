@@ -12,11 +12,16 @@ ReaderTableModel::ReaderTableModel(QObject *parent)
     }
     QVariantList list1;
     QVariantList list2;
-    list1 << "0" << "000000";
-    list2 << "1" << "111111";
+    QVariantList list3;
+    QVariantList list4;
+    list1 << QString::fromLocal8Bit("左俊") << "2840710723";
+    list2 << QString::fromLocal8Bit("赵海昕") << "2840710724";
+    list3 << QString::fromLocal8Bit("李攀") << "2840710725";
+    list4 << QString::fromLocal8Bit("王慧鹏") << "2840710726";
     m_datas.append(list1);
     m_datas.append(list2);
-
+    m_datas.append(list3);
+    m_datas.append(list4);
     m_headers << QVariant("Id") << QVariant("Password");
 }
 

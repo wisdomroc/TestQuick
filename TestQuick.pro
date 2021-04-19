@@ -8,8 +8,10 @@ msvc{
 }
 
 HEADERS += \
+    Src/EfficientModel.h \
+    Src/SortFilterModel.h \
     Src/reader.h \
-    Src/readermodel.h \
+    Src/readerlistmodel.h \
     Src/readertablemodel.h \
     Src/record.h \
     Src/Logger/Logger.h \
@@ -20,9 +22,11 @@ HEADERS += \
     Src/TableStatus.hpp
 
 SOURCES += \
+    Src/EfficientModel.cpp \
+    Src/SortFilterModel.cpp \
     Src/main.cpp \
     Src/reader.cpp \
-    Src/readermodel.cpp \
+    Src/readerlistmodel.cpp \
     Src/readertablemodel.cpp \
     Src/record.cpp \
     Src/Logger/Logger.cpp \

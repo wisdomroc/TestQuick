@@ -1,7 +1,7 @@
-﻿#include "readermodel.h"
+﻿#include "readerlistmodel.h"
 #include <QVariantMap>
 
-ReaderModel::ReaderModel(QObject *parent):QAbstractListModel (parent)
+ReaderListModel::ReaderListModel(QObject *parent):QAbstractListModel (parent)
 {
     Q_UNUSED(parent)
 
@@ -12,12 +12,12 @@ ReaderModel::ReaderModel(QObject *parent):QAbstractListModel (parent)
     }
 }
 
-int ReaderModel::rowCount(const QModelIndex &parent) const
+int ReaderListModel::rowCount(const QModelIndex &parent) const
 {
     return m_readers.count();
 }
 
-QVariant ReaderModel::data(const QModelIndex &index, int role) const
+QVariant ReaderListModel::data(const QModelIndex &index, int role) const
 {
     if(index.row() < m_readers.count())
     {
@@ -37,7 +37,7 @@ QVariant ReaderModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> ReaderModel::roleNames() const
+QHash<int, QByteArray> ReaderListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(IdRole, "id");
@@ -46,7 +46,7 @@ QHash<int, QByteArray> ReaderModel::roleNames() const
     return roles;
 }
 
-QString ReaderModel::getTestData()
+QString ReaderListModel::getTestData()
 {
     return m_readers.last()->id();
 }

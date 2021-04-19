@@ -31,5 +31,16 @@
         <file>qtquickcontrol2.conf</file>
         <file>Qml/Component/MyToggleButton.qml</file>
         <file>Qml/Component/MyBusyIndicator.qml</file>
+        <file>Qml/Component/MyTableView.qml</file>
+        <file>Qml/Component/TagLine.qml</file>
+        <file>Qml/Component/AmazingText.qml</file>
+        <file>Qml/Component/MyFlowText.qml</file>
+        <file>Qml/Component/MyDateEdit.qml</file>
+        <file>Qml/Component/Spanner.qml</file>
+        <file>Qml/TableHeader.qml</file>
+        <file>Qml/TableScrollBar.qml</file>
+        <file>Qml/TableCell.qml</file>
+        <file>Qml/EfficientTable.qml</file>
+        <file>Qml/main1.qml</file>
     </qresource>
 </RCC>

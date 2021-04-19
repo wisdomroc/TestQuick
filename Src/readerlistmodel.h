@@ -1,10 +1,10 @@
-﻿#ifndef READERMODEL_H
-#define READERMODEL_H
+﻿#ifndef READERLISTMODEL_H
+#define READERLISTMODEL_H
 #include "reader.h"
 #include <QAbstractListModel>
 #include <QVariant>
 
-class ReaderModel : public QAbstractListModel
+class ReaderListModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -16,7 +16,7 @@ public:
     };
     Q_ENUM(ReaderRole)
 
-    explicit ReaderModel(QObject *parent = nullptr);
+    explicit ReaderListModel(QObject *parent = nullptr);
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -28,4 +28,4 @@ private:
     QList<Reader *> m_readers;
 };
 
-#endif // READERMODEL_H
+#endif // READERLISTMODEL_H
