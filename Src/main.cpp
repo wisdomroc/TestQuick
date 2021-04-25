@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
     Logger::initLog();
 
     //! 向qml注册类型
-    qmlRegisterType<ReaderListModel>("Backend", 1, 0, "ReaderListModel");
-    qmlRegisterType<ReaderTableModel>("ReaderTableModel", 1, 0, "ReaderTableModel");
+    qmlRegisterType<StudentListModel>("Backend", 1, 0, "StudentListModel");
+    qmlRegisterType<StudentTableModel>("StudentTableModel", 1, 0, "StudentTableModel");
     qmlRegisterType<FileIO>("Tools", 1, 0, "FileIO");
     qmlRegisterType<FileInfo>("Tools", 1, 0, "FileInfo");
     qmlRegisterType<OperationRecorder>("Tools", 1, 0, "OperationRecorder");
@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
 
     //! 向qml传递变量
     TableStatus tableStatus;
-    ReaderListModel *readerListModel = new ReaderListModel();
-    ReaderTableModel *readerTableModel = new ReaderTableModel();
+    StudentListModel *studentListModel = new StudentListModel();
+    StudentTableModel *studentTableModel = new StudentTableModel();
     engine->rootContext()->setContextProperty("TableStatus", &tableStatus);
-    engine->rootContext()->setContextProperty("readerListModel", readerListModel);
-    engine->rootContext()->setContextProperty("readerTableModel", readerTableModel);
+    engine->rootContext()->setContextProperty("studentListModel", studentListModel);
+    engine->rootContext()->setContextProperty("studentTableModel", studentTableModel);
     engine->load(QUrl("qrc:/Qml/main1.qml"));
 
 

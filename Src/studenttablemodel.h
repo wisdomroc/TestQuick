@@ -1,5 +1,5 @@
-﻿#ifndef READERTABLEMODEL_H
-#define READERTABLEMODEL_H
+﻿#ifndef STUDENTTABLEMODEL_H
+#define STUDENTTABLEMODEL_H
 
 #include "student.h"
 #include <QAbstractTableModel>
@@ -8,11 +8,12 @@ class StudentTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    enum ReaderTableRole {
-        IdRole = Qt::UserRole + 1,
-        PasswordRole
+    enum StudentTableRole {
+        IdRole = Qt::UserRole + 4,
+        NameRole,
+        SexRole
     };
-    Q_ENUM(ReaderTableRole)
+    Q_ENUM(StudentTableRole)
     explicit StudentTableModel(QObject *parent = nullptr);
 
     // Header:
@@ -37,13 +38,13 @@ public:
     // Add data:
     Q_INVOKABLE bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    Q_INVOKABLE QString getTestData();
+    Q_INVOKABLE void testOutput();
 
 private:
 
-    QList<Student *> m_readers;
+    QList<Student *> m_students;
     QList<QVariantList> m_datas;
     QVariantList m_headers;
 };
 
-#endif // READERTABLEMODEL_H
+#endif // STUDENTTABLEMODEL_H

@@ -1,4 +1,4 @@
-﻿#ifndef READERLISTMODEL_H
+﻿#ifndef STUDENTLISTMODEL_H
 #define READERLISTMODEL_H
 #include "student.h"
 #include <QAbstractListModel>
@@ -9,12 +9,12 @@ class StudentListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum ReaderRole {
+    enum StudentRole {
         IdRole = Qt::DisplayRole,//0
-        PasswordRole = Qt::UserRole,
-        RecordRole
+        NameRole = Qt::UserRole,
+        SexRole
     };
-    Q_ENUM(ReaderRole)
+    Q_ENUM(StudentRole)
 
     explicit StudentListModel(QObject *parent = nullptr);
 
@@ -22,10 +22,10 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
-    Q_INVOKABLE QString getTestData();
+    Q_INVOKABLE void testOutput();
 
 private:
-    QList<Student *> m_readers;
+    QList<Student *> m_students;
 };
 
-#endif // READERLISTMODEL_H
+#endif // STUDENTLISTMODEL_H

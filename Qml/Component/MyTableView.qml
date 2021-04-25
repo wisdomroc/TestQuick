@@ -15,7 +15,7 @@ Item {
             Layout.fillHeight: true
             clip: true
 
-            model: readerTableModel
+            model: studentTableModel
 
             headerDelegate: headerDel  //表格头委托
             rowDelegate: rowDel    //表格行委托
@@ -162,7 +162,7 @@ Item {
                 text: "Add Rows"
                 onClicked: {
                     console.log("Add Rows Btn Clicked ...")
-                    readerTableModel.insertRows(2, 2);
+                    studentTableModel.insertRows(2, 2);
 
                 }
             }
@@ -173,7 +173,7 @@ Item {
                 text: "Remove Rows"
                 onClicked: {
                     console.log("Remove Rows Btn Clicked ...")
-                    readerTableModel.removeRows(2,2);
+                    studentTableModel.removeRows(2,2);
                 }
             }
             Item {
