@@ -4,7 +4,7 @@ import QtQuick.Controls 1.4
 
 Rectangle{
     color: currentIndex === model.row ?
-               "green" :"#1a2b3c"
+               "gray" :"lightGray"
 
     border.width :0
     Label{

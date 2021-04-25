@@ -81,7 +81,7 @@ Window {
         Button {
             text:"打印"
             onClicked: {
-               console.log(tableRoot.rows)
+                console.log(tableRoot.rows)
 
             }
         }
@@ -109,14 +109,16 @@ Window {
 
 
             var data = {}
-            for (var i=0; i < 300; i++){
+            for (var i=0; i < 300; i++)
+            {
 
                 var roleName = "C"+String(i)
                 data[roleName]= "----"+String(ss)
 
             }
             var datas = []
-            for (var j=0; j <10000;j++){
+            for (var j=0; j <10000;j++)
+            {
 
 
 
@@ -125,12 +127,12 @@ Window {
 
             }
             console.timeEnd("test1")
-tableRoot.insertRows(tableRoot.rows,datas)
-        //    tableRoot.insertRows(tableRoot.rows,datas)
+            tableRoot.insertRows(tableRoot.rows,datas)
+            //    tableRoot.insertRows(tableRoot.rows,datas)
 
 
-          //  tableRoot.table.contentY = tableRoot.table.contentHeight +
-           //         tableRoot.height
+            //  tableRoot.table.contentY = tableRoot.table.contentHeight +
+            //         tableRoot.height
         }
     }
 }

@@ -31,7 +31,7 @@ Item{
                 id: header_horizontal_item
                 width: table_view.columnWidthProvider(index)+table_view.columnSpacing
                 height: parent.height
-                color: "red"//自己配色
+                color: "steelBlue"//自己配色
 
 
                 border.width: 1
@@ -42,6 +42,7 @@ Item{
                     width:parent.width
                     height:control.horHeaderHeight
                     horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                     //anchors.fill: parent
                     text: _sourceModel.headerData(index,Qt.Horizontal)
                 }
@@ -50,12 +51,12 @@ Item{
                     width: parent.width
                     height: filterMode*25
                     anchors.bottom: parent.bottom
-                    color: "blue"
+                    color: Qt.lighter("steelBlue")
                     visible:height !== 0
-                    TextInput{
+                    TextInput {
                         anchors.fill: parent
                         onTextChanged:{
-                          //  console.log(text,index)
+                            //console.log(text,index)
                             //设置过滤条件
                             _displayModel.setCondition(index,text)
 

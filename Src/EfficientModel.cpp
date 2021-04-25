@@ -26,9 +26,6 @@ int EfficientModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     return _modelData.size();
-
-
-
     // FIXME: Implement me!
 }
 

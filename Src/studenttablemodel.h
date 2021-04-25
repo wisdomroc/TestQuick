@@ -1,10 +1,10 @@
 ﻿#ifndef READERTABLEMODEL_H
 #define READERTABLEMODEL_H
 
-#include "reader.h"
+#include "student.h"
 #include <QAbstractTableModel>
 
-class ReaderTableModel : public QAbstractTableModel
+class StudentTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
@@ -13,7 +13,7 @@ public:
         PasswordRole
     };
     Q_ENUM(ReaderTableRole)
-    explicit ReaderTableModel(QObject *parent = nullptr);
+    explicit StudentTableModel(QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -41,7 +41,7 @@ public:
 
 private:
 
-    QList<Reader *> m_readers;
+    QList<Student *> m_readers;
     QList<QVariantList> m_datas;
     QVariantList m_headers;
 };

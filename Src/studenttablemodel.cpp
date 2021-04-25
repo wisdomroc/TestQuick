@@ -1,8 +1,8 @@
-﻿#include "readertablemodel.h"
+﻿#include "studenttablemodel.h"
 #include <QVariantList>
 #include <QDebug>
 
-ReaderTableModel::ReaderTableModel(QObject *parent)
+StudentTableModel::StudentTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
     for(int i = 0; i < 10; i ++)
@@ -25,7 +25,7 @@ ReaderTableModel::ReaderTableModel(QObject *parent)
     m_headers << QVariant("Id") << QVariant("Password");
 }
 
-QVariant ReaderTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant StudentTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
     if(role == Qt::DisplayRole && orientation == Qt::Horizontal)
@@ -35,7 +35,7 @@ QVariant ReaderTableModel::headerData(int section, Qt::Orientation orientation, 
     return QVariant();
 }
 
-bool ReaderTableModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+bool StudentTableModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
     if (value != headerData(section, orientation, role)) {
         m_headers.replace(section, value);
@@ -46,7 +46,7 @@ bool ReaderTableModel::setHeaderData(int section, Qt::Orientation orientation, c
 }
 
 
-int ReaderTableModel::rowCount(const QModelIndex &parent) const
+int StudentTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -54,7 +54,7 @@ int ReaderTableModel::rowCount(const QModelIndex &parent) const
     return m_readers.count();
 }
 
-int ReaderTableModel::columnCount(const QModelIndex &parent) const
+int StudentTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -65,7 +65,7 @@ int ReaderTableModel::columnCount(const QModelIndex &parent) const
         return 2;
 }
 
-QVariant ReaderTableModel::data(const QModelIndex &index, int role) const
+QVariant StudentTableModel::data(const QModelIndex &index, int role) const
 {
     if(index.row() < 0 || index.row() > m_datas.count() - 1)
         return QVariant();
@@ -94,7 +94,7 @@ QVariant ReaderTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ReaderTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool StudentTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (data(index, role) != value) {
         m_readers.replace(index.row(), value.value<Reader *>());
@@ -104,7 +104,7 @@ bool ReaderTableModel::setData(const QModelIndex &index, const QVariant &value, 
     return false;
 }
 
-Qt::ItemFlags ReaderTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags StudentTableModel::flags(const QModelIndex &index) const
 {
     if (index.column() == 0)
     {
@@ -116,7 +116,7 @@ Qt::ItemFlags ReaderTableModel::flags(const QModelIndex &index) const
     }
 }
 
-QHash<int, QByteArray> ReaderTableModel::roleNames() const
+QHash<int, QByteArray> StudentTableModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(IdRole, "id");
@@ -124,7 +124,7 @@ QHash<int, QByteArray> ReaderTableModel::roleNames() const
     return roles;
 }
 
-bool ReaderTableModel::insertRows(int row, int count, const QModelIndex &parent)
+bool StudentTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
     // FIXME: Implement me!
@@ -139,7 +139,7 @@ bool ReaderTableModel::insertRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-bool ReaderTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool StudentTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     // FIXME: Implement me!
@@ -151,7 +151,7 @@ bool ReaderTableModel::removeRows(int row, int count, const QModelIndex &parent)
     return true;
 }
 
-QString ReaderTableModel::getTestData()
+QString StudentTableModel::getTestData()
 {
     return m_datas.first().first().toString();
 }

@@ -4,8 +4,8 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QFontDatabase>
-#include "readerlistmodel.h"
-#include "readertablemodel.h"
+#include "studentlistmodel.h"
+#include "studenttablemodel.h"
 #include "Logger/Logger.h"
 #include "FileIO.hpp"
 #include "FileInfo.hpp"

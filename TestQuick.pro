@@ -10,30 +10,28 @@ msvc{
 HEADERS += \
     Src/EfficientModel.h \
     Src/SortFilterModel.h \
-    Src/reader.h \
-    Src/readerlistmodel.h \
-    Src/readertablemodel.h \
-    Src/record.h \
     Src/Logger/Logger.h \
     Src/Logger/LoggerTemplate.h \
     Src/FileInfo.hpp \
     Src/FileIO.hpp \
     Src/OperationRecorder.hpp \
-    Src/TableStatus.hpp
+    Src/TableStatus.hpp \
+    Src/student.h \
+    Src/studentlistmodel.h \
+    Src/studenttablemodel.h
 
 SOURCES += \
     Src/EfficientModel.cpp \
     Src/SortFilterModel.cpp \
     Src/main.cpp \
-    Src/reader.cpp \
-    Src/readerlistmodel.cpp \
-    Src/readertablemodel.cpp \
-    Src/record.cpp \
     Src/Logger/Logger.cpp \
     Src/FileInfo.cpp \
     Src/FileIO.cpp \
     Src/OperationRecorder.cpp \
-    Src/TableStatus.cpp
+    Src/TableStatus.cpp \
+    Src/student.cpp \
+    Src/studentlistmodel.cpp \
+    Src/studenttablemodel.cpp
 
 RESOURCES += qml.qrc \
     qml.qrc \

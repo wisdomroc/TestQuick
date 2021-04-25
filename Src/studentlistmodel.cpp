@@ -1,23 +1,23 @@
-﻿#include "readerlistmodel.h"
+﻿#include "studentlistmodel.h"
 #include <QVariantMap>
 
-ReaderListModel::ReaderListModel(QObject *parent):QAbstractListModel (parent)
+StudentListModel::StudentListModel(QObject *parent):QAbstractListModel (parent)
 {
     Q_UNUSED(parent)
 
     for(int i = 0; i < 3000; i ++)
     {
-        Reader *reader = new Reader(tr("%1%2").arg(QString::fromLocal8Bit("张")).arg(i), "******");
+        Student *reader = new Reader(tr("%1%2").arg(QString::fromLocal8Bit("张")).arg(i), "******");
         m_readers.append(reader);
     }
 }
 
-int ReaderListModel::rowCount(const QModelIndex &parent) const
+int StudentListModel::rowCount(const QModelIndex &parent) const
 {
     return m_readers.count();
 }
 
-QVariant ReaderListModel::data(const QModelIndex &index, int role) const
+QVariant StudentListModel::data(const QModelIndex &index, int role) const
 {
     if(index.row() < m_readers.count())
     {
@@ -37,7 +37,7 @@ QVariant ReaderListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> ReaderListModel::roleNames() const
+QHash<int, QByteArray> StudentListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(IdRole, "id");
@@ -46,7 +46,7 @@ QHash<int, QByteArray> ReaderListModel::roleNames() const
     return roles;
 }
 
-QString ReaderListModel::getTestData()
+QString StudentListModel::getTestData()
 {
     return m_readers.last()->id();
 }
