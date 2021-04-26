@@ -7,7 +7,7 @@ StudentTableModel::StudentTableModel(QObject *parent)
 {
     for(int i = 0; i < 10; i ++)
     {
-        Student *student = new Student(QString::number(i).leftJustified(3, '0'), tr("张%1").arg(i), 2 % i);
+        Student *student = new Student(QString::number(i).rightJustified(3, '0'), tr("张%1").arg(i), i % 2);
         m_students.append(student);
     }
 
@@ -129,7 +129,7 @@ bool StudentTableModel::insertRows(int row, int count, const QModelIndex &parent
     for(int i = 0; i < count; i ++)
     {
         QVariantList list;
-        list.append(QString::number(i).leftJustified(3, '0'));
+        list.append(QString::number(i).rightJustified(3, '0'));
         list.append(tr("Test%1").arg(i));
         list.append(i % 2);
         m_datas.insert(row + i, list);

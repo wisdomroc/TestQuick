@@ -3,15 +3,16 @@ import QtQuick.Controls 2.4
 import QtQml.Models 2.11
 import QtQuick.Layouts 1.0
 
-Rectangle {
+FocusScope {
     property bool refreshFlag: false
-    property alias model: __listModel
     property alias view: __listView
     property alias currentIndex: __listView.currentIndex
+    property var headerLabels: ["学号", "姓名", "性别", "保留位1", "保留位2", "保留位3", "保留位4", "保留位5", "保留位6", "保留位7"]
+    property var headerRoles: ["id", "name", "sex", "reserve1", "reserve2", "reserve3", "reserve4", "reserve5", "reserve6", "reserve7"]
+    property var headerWidths: [40, 40, 40, 100, 100, 100, 100, 100, 100, 100]
 
-    radius: 5
-    border.width: 3
-    border.color: __listView.activeFocus ? "lightGreen" : "gray"
+    clip: true
+
 
     // 下拉刷新功能的实现代码
     Rectangle{
@@ -51,19 +52,18 @@ Rectangle {
         }
     }
 
-    ListModel {
-        id: __listModel
-    }
-
     ListView{
         id:__listView
-        anchors.fill: parent
-        anchors.margins: 6
+        anchors {
+            fill: parent
+            topMargin: 30
+        }
+
         keyNavigationEnabled: true
         keyNavigationWraps: true
-        model: __listModel
-        spacing: 10
-        clip: true
+        model: studentListModel
+        spacing: 1
+
         cacheBuffer: 20
         focus: true
 
@@ -83,63 +83,121 @@ Rectangle {
             console.log("current index = ",currentIndex)
         }
 
-        delegate: Rectangle{
-            id: __listViewDelegate
-            width: __listView.width
-            height: 60
-            radius: 5
-            border.color: "white"
-            border.width: 1
-            color: ListView.isCurrentItem ? "lightGreen" : "steelBlue"
-            //或者使用下面的方式
-            //color: __listView.currentIndex === index ? "lightGreen" : "steelBlue"
-            Label{
-                anchors.centerIn: parent
-                font.pointSize: 20
-                text: name
-            }
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                onClicked: {
-                    __listView.currentIndex = index
-                    __listView.forceActiveFocus()
-                    if(mouse.button === Qt.RightButton)
-                    {
-                        console.log("rightBtn click...")
-                        contextMenu.popup()
+        delegate: Rectangle {
+            id: listViewDelegate
+            width: ListView.view.width
+            height: 30
+            color: ListView.view.currentIndex === index ? "gray" : "lightGray"
+            property var myModel: model
+
+            Row {
+                Repeater {
+                    model: headerWidths
+
+                    Text{
+                        text: myModel[headerRoles[index]]
+                        width: headerWidths[index]
+                        height: 30
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            width: 1
+                            height: listViewDelegate.height
+                            anchors.right: parent.right
+                        }
                     }
                 }
             }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    __listView.currentIndex = index
+                }
+            }
+
             Component.onDestruction: console.log("ListModel " + index + "destroyed...")
             Component.onCompleted: console.log("ListModel " + index + "created...")
         }
+    }
 
-        add: Transition {
-            NumberAnimation { properties: "y"; from: 0; duration: 1000}
-            NumberAnimation { properties: "opacity"; from: 0; to: 1.0; duration: 1000}
+    //! 自定义表头
+    Rectangle {
+        id: horizontalHeader
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
         }
+        height: 30
+        color: "steelBlue"
 
-        displaced: Transition {
-            SpringAnimation { properties: "y"; spring: 2; damping: 0.5; epsilon: 0.25 }
-        }
+        //暂存鼠标拖动的位置
+        property int posXTemp: 0
 
-        remove: Transition {
-            SequentialAnimation {
-                PropertyAction { properties: "transformOrigin"; value:Item.TopLeft }
-                NumberAnimation { properties: "scale"; to: 0; duration: 1000 }
-                NumberAnimation { properties: "opacity"; to: 0; duration: 1000 }
+
+        MouseArea{
+            anchors.fill: parent
+            onPressed: horizontalHeader.posXTemp=mouseX;
+            onPositionChanged: {
+                if(__listView.contentX+(horizontalHeader.posXTemp-mouseX)>0){
+                    __listView.contentX+=(horizontalHeader.posXTemp-mouseX);
+                }else{
+                    __listView.contentX=0;
+                }
+                horizontalHeader.posXTemp=mouseX;
             }
         }
 
-        move: Transition {
-            NumberAnimation { properties: "y"; duration: 1000; easing.type: Easing.OutQuart }
+
+        Row {
+            anchors.fill: parent
+            leftPadding: -__listView.contentX
+            clip: true
+            Repeater {
+                model: headerLabels
+                Text{
+                    id: header_horizontal_item
+                    text: headerLabels[index]
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    width: headerWidths[index]
+                    height: horizontalHeader.height
+                    Rectangle {
+                        width: 1
+                        height: parent.height
+                        anchors.right: parent.right
+                        visible: index === headerLabels.length ? false : true
+                    }
+                    MouseArea{
+                        width: 3
+                        height: parent.height
+                        anchors.right: parent.right
+                        cursorShape: Qt.SplitHCursor
+                        onPressed: horizontalHeader.posXTemp=mouseX;
+                        onPositionChanged: {
+                            if((header_horizontal_item.width-(horizontalHeader.posXTemp-mouseX)) > 10)
+                            {
+                                header_horizontal_item.width-=(horizontalHeader.posXTemp-mouseX);
+                            }
+                            else
+                            {
+                                header_horizontal_item.width=10;
+                            }
+                            horizontalHeader.posXTemp = mouseX;
+
+                            //改变某列的宽度
+                            headerWidths[index]=(header_horizontal_item.width);
+
+                            //刷新布局，这样宽度才会改变
+                            __listView.forceLayout()
+                            __listView.forceActiveFocus()
+                        }
+                    }
+                }
+            }
         }
 
-        /* 在ListView第一次实例化或者因Model变化而需要创建Item时应用 */
-        populate: Transition {
-            NumberAnimation { properties: "y"; duration: 1000 }
-        }
     }
 
     VScrollBar {
@@ -179,6 +237,36 @@ Rectangle {
             model.move(currentIndex, currentIndex + 1, 1)
         }
     }
+
+
+
+    //! 以下为动画效果
+    /*
+        add: Transition {
+            NumberAnimation { properties: "y"; from: 0; duration: 1000}
+            NumberAnimation { properties: "opacity"; from: 0; to: 1.0; duration: 1000}
+        }
+
+        displaced: Transition {
+            SpringAnimation { properties: "y"; spring: 2; damping: 0.5; epsilon: 0.25 }
+        }
+
+        remove: Transition {
+            SequentialAnimation {
+                PropertyAction { properties: "transformOrigin"; value:Item.TopLeft }
+                NumberAnimation { properties: "scale"; to: 0; duration: 1000 }
+                NumberAnimation { properties: "opacity"; to: 0; duration: 1000 }
+            }
+        }
+
+        move: Transition {
+            NumberAnimation { properties: "y"; duration: 1000; easing.type: Easing.OutQuart }
+        }
+
+        populate: Transition {
+            NumberAnimation { properties: "y"; duration: 1000 }
+        }
+        */
 }
 
 

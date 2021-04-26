@@ -144,6 +144,7 @@ ApplicationWindow {
         clip: true
         currentIndex: 1
         property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
+        /*
         Item {
             id: page0
             MyTableView {
@@ -197,6 +198,7 @@ ApplicationWindow {
                 y: 500
             }
         }
+        */
 
         Item {
             id: page1
@@ -204,12 +206,9 @@ ApplicationWindow {
                 anchors.fill: parent
                 MyListView {
                     id: myListView
-                    width: 600
+                    width: 1200
                     Layout.fillHeight: true
                     focus: true
-                    Component.onCompleted: {
-                        myListView.initData(100)
-                    }
                 }
 
                 RowLayout {
@@ -239,6 +238,8 @@ ApplicationWindow {
                 }
             }
         }
+
+        /*
         Item {
             id: page2
             TreeView {
@@ -282,9 +283,11 @@ ApplicationWindow {
                 }
             }
         }
+
         TestTable {
             id: page3
         }
+        */
     }
 
     function setTestDataA(){

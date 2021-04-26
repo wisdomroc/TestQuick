@@ -10,9 +10,16 @@ class StudentListModel : public QAbstractListModel
 
 public:
     enum StudentRole {
-        IdRole = Qt::DisplayRole,//0
-        NameRole = Qt::UserRole,
-        SexRole
+        IdRole = Qt::UserRole + 1,
+        NameRole,
+        SexRole,
+        Reserve1,
+        Reserve2,
+        Reserve3,
+        Reserve4,
+        Reserve5,
+        Reserve6,
+        Reserve7
     };
     Q_ENUM(StudentRole)
 
