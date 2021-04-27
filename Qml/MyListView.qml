@@ -3,15 +3,25 @@ import QtQuick.Controls 2.4
 import QtQml.Models 2.11
 import QtQuick.Layouts 1.0
 
+//! 这里有个问题：
+//! 如果在ListView的Component.onCompleted里面初始化，然后在自定义表头中取不到相关的值
+//! 如果在studentListView中初始化，那么自定义表头中就可以正常取到值
+
 FocusScope {
     property bool refreshFlag: false
     property alias view: __listView
     property alias currentIndex: __listView.currentIndex
-    property var headerLabels: ["学号", "姓名", "性别", "保留位1", "保留位2", "保留位3", "保留位4", "保留位5", "保留位6", "保留位7"]
-    property var headerRoles: ["id", "name", "sex", "reserve1", "reserve2", "reserve3", "reserve4", "reserve5", "reserve6", "reserve7"]
-    property var headerWidths: [40, 40, 40, 100, 100, 100, 100, 100, 100, 100]
 
     clip: true
+
+    property var headerWidth: []
+
+    //添加新列
+    function insertColumn(tableIndex,columnName,roleName,width){
+        headerWidth.splice(tableIndex,0,width)
+        studentListModel.insertColumn(tableIndex,columnName,roleName,width)
+    }
+
 
 
     // 下拉刷新功能的实现代码
@@ -64,6 +74,8 @@ FocusScope {
         model: studentListModel
         spacing: 1
 
+
+
         cacheBuffer: 20
         focus: true
 
@@ -83,20 +95,21 @@ FocusScope {
             console.log("current index = ",currentIndex)
         }
 
+//        header: horizontalHeader
         delegate: Rectangle {
             id: listViewDelegate
             width: ListView.view.width
             height: 30
             color: ListView.view.currentIndex === index ? "gray" : "lightGray"
-            property var myModel: model
+            property var myModel: model.value.split(",")
 
             Row {
                 Repeater {
-                    model: headerWidths
+                    model: headerWidth.length
 
                     Text{
-                        text: myModel[headerRoles[index]]
-                        width: headerWidths[index]
+                        text: myModel[index]
+                        width: headerWidth[index]
                         height: 30
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -113,6 +126,12 @@ FocusScope {
                 anchors.fill: parent
                 onClicked: {
                     __listView.currentIndex = index
+
+
+
+                    console.log("######## columnCount: " + studentListModel.columnCount())
+                    console.log("######## headerData: " + studentListModel.headerData(index, Qt.Horizontal))
+                    console.log("######## headerWidth: " + headerWidth[index])
                 }
             }
 
@@ -152,22 +171,22 @@ FocusScope {
 
         Row {
             anchors.fill: parent
-            leftPadding: -__listView.contentX
+            leftPadding: 0 //-__listView.contentX
             clip: true
             Repeater {
-                model: headerLabels
+                model: headerWidth.length
                 Text{
                     id: header_horizontal_item
-                    text: headerLabels[index]
+                    text: studentListModel.headerData(index, Qt.Horizontal)
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    width: headerWidths[index]
+                    width: headerWidth[index]
                     height: horizontalHeader.height
                     Rectangle {
                         width: 1
                         height: parent.height
                         anchors.right: parent.right
-                        visible: index === headerLabels.length ? false : true
+                        visible: index === headerWidth.length ? false : true
                     }
                     MouseArea{
                         width: 3
@@ -187,11 +206,10 @@ FocusScope {
                             horizontalHeader.posXTemp = mouseX;
 
                             //改变某列的宽度
-                            headerWidths[index]=(header_horizontal_item.width);
+                            headerWidth[index] = header_horizontal_item.width;
 
                             //刷新布局，这样宽度才会改变
                             __listView.forceLayout()
-                            __listView.forceActiveFocus()
                         }
                     }
                 }
@@ -204,38 +222,37 @@ FocusScope {
         id:scrollBar
         theList:__listView
         width:6
-        color:parent.color
+        color: "cyan"
     }
 
-    Menu {
-        id: contextMenu
-        MenuItem { text: "Cut" }
-        MenuItem { text: "Copy" }
-        MenuItem { text: "Paste" }
-    }
 
-    function initData(count) {
-        var i = 0;
-        while(i < count)
-        {
-            var info = {'name': "Construct Info " + i}
-            __listModel.append(info)
-            i ++
-        }
-    }
-
-    function insertOneRecord(index, info) {
-        __listModel.insert(index, info)
-    }
-
-    function deleteOneRecord(index) {
-        __listModel.remove(index)
-    }
-
-    function moveDown() {
-        if(currentIndex + 1 < model.count) {
-            model.move(currentIndex, currentIndex + 1, 1)
-        }
+    Component.onCompleted: {
+        headerWidth = studentListModel.headerWidths()
+        /*
+        insertColumn(0, qsTr("序号"), "id", 40);
+        insertColumn(1, qsTr("姓名"), "name", 40);
+        insertColumn(2, qsTr("性别"), "sex", 40);
+        insertColumn(3, qsTr("保留1"), "reserve1", 100);
+        insertColumn(4, qsTr("保留2"), "reserve2", 100);
+        insertColumn(5, qsTr("保留3"), "reserve3", 100);
+        insertColumn(6, qsTr("保留4"), "reserve4", 100);
+        insertColumn(7, qsTr("保留5"), "reserve5", 100);
+        insertColumn(8, qsTr("保留6"), "reserve6", 100);
+        insertColumn(9, qsTr("保留7"), "reserve7", 100);
+        insertColumn(10, qsTr("保留8"), "reserve8", 100);
+        insertColumn(11, qsTr("保留9"), "reserve9", 100);
+        insertColumn(12, qsTr("保留10"), "reserve10", 100);
+        insertColumn(13, qsTr("保留11"), "reserve11", 100);
+        insertColumn(14, qsTr("保留12"), "reserve12", 100);
+        insertColumn(15, qsTr("保留13"), "reserve13", 100);
+        insertColumn(16, qsTr("保留14"), "reserve14", 100);
+        insertColumn(17, qsTr("保留15"), "reserve15", 100);
+        insertColumn(18, qsTr("保留16"), "reserve16", 100);
+        insertColumn(19, qsTr("保留17"), "reserve17", 100);
+        insertColumn(20, qsTr("保留18"), "reserve18", 100);
+        insertColumn(21, qsTr("保留19"), "reserve19", 100);
+        insertColumn(22, qsTr("保留20"), "reserve20", 100);
+        */
     }
 
 

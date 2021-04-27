@@ -206,7 +206,7 @@ ApplicationWindow {
                 anchors.fill: parent
                 MyListView {
                     id: myListView
-                    width: 1200
+                    Layout.fillWidth: true
                     Layout.fillHeight: true
                     focus: true
                 }
