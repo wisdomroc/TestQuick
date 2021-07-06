@@ -16,6 +16,9 @@ HEADERS += \
     Src/FileIO.hpp \
     Src/OperationRecorder.hpp \
     Src/TableStatus.hpp \
+    Src/TreeItem.h \
+    Src/TreeModel.h \
+    Src/define.h \
     Src/student.h \
     Src/studentlistmodel.h \
     Src/studenttablemodel.h
@@ -23,6 +26,8 @@ HEADERS += \
 SOURCES += \
     Src/EfficientModel.cpp \
     Src/SortFilterModel.cpp \
+    Src/TreeItem.cpp \
+    Src/TreeModel.cpp \
     Src/main.cpp \
     Src/Logger/Logger.cpp \
     Src/FileInfo.cpp \

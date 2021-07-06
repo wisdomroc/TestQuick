@@ -41,6 +41,7 @@
         <file>Qml/TableScrollBar.qml</file>
         <file>Qml/TableCell.qml</file>
         <file>Qml/EfficientTable.qml</file>
-        <file>Qml/main1.qml</file>
+        <file>Qml/mainTest.qml</file>
+        <file>Qml/TreeViewTest.qml</file>
     </qresource>
 </RCC>

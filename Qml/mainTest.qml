@@ -1,4 +1,4 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 1.4
 Window {
@@ -9,9 +9,15 @@ Window {
     title: qsTr("Hello World")
 
 
-    EfficientTable {
-        id:tableRoot
-        anchors.fill: parent;
+//    EfficientTable {
+//        id:tableRoot
+//        anchors.fill: parent;
+//        anchors.bottomMargin: 50
+//    }
+
+    TreeViewTest {
+        id: treeViewTest
+        anchors.fill: parent
         anchors.bottomMargin: 50
     }
 
