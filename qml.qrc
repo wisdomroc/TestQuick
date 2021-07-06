@@ -14,7 +14,7 @@
         <file>Qml/StyleButton.qml</file>
         <file>Qml/TestBinding.qml</file>
         <file>Qml/TimLogin.qml</file>
-        <file>Qml/TreeView.qml</file>
+        <file>Qml/TreeViewCustom.qml</file>
         <file>Qml/TSoundByte.qml</file>
         <file>Qml/CTable.qml</file>
         <file>Qml/TestTable.qml</file>
@@ -43,5 +43,6 @@
         <file>Qml/EfficientTable.qml</file>
         <file>Qml/mainTest.qml</file>
         <file>Qml/TreeViewTest.qml</file>
+        <file>Qml/TreeViewStandard.qml</file>
     </qresource>
 </RCC>

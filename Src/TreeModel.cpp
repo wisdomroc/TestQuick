@@ -11,6 +11,16 @@ TreeModel::TreeModel(QStringList headers,QObject *parent)
 {
     mHeaders = headers;
     mRootItem = new TreeItem;
+    QStringList headers_test;
+    headers_test << QStringLiteral("班级/姓名")
+            << QStringLiteral("语文")
+            << QStringLiteral("数学")
+            << QStringLiteral("外语")
+            << QStringLiteral("总分")
+            << QStringLiteral("平均分")
+            << QStringLiteral("是否合格")
+            << QStringLiteral("是否评优");
+    mHeaders = headers_test;
 }
 
 TreeModel::~TreeModel()
@@ -52,6 +62,34 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {
         return item->data(index.column());
+    }
+    else if(role == NameRole)
+    {
+        return item->data(0);
+    }
+    else if(role == YuWenRole)
+    {
+        return item->data(1);
+    }
+    else if(role == ShuXueRole)
+    {
+        return item->data(2);
+    }
+    else if(role == ScoreRole)
+    {
+        return item->data(3);
+    }
+    else if(role == AverageScoreRole)
+    {
+        return item->data(4);
+    }
+    else if(role == HeGeRole)
+    {
+        return item->data(5);
+    }
+    else if(role == YouXiuRole)
+    {
+        return item->data(6);
     }
     else if( role == Qt::TextAlignmentRole )
     {
@@ -145,4 +183,18 @@ int TreeModel::rowCount(const QModelIndex &parent) const
 int TreeModel::columnCount(const QModelIndex &parent) const
 {
     return mHeaders.size();
+}
+
+QHash<int, QByteArray> TreeModel::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles.insert(NameRole, "name");
+    roles.insert(YuWenRole, "yuwen");
+    roles.insert(ShuXueRole, "shuxue");
+    roles.insert(WaiYuRole, "waiyu");
+    roles.insert(ScoreRole, "zongfen");
+    roles.insert(AverageScoreRole, "pingjunfen");
+    roles.insert(HeGeRole, "hege");
+    roles.insert(YouXiuRole, "youxiu");
+    return roles;
 }

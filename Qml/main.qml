@@ -242,7 +242,7 @@ ApplicationWindow {
         /*
         Item {
             id: page2
-            TreeView {
+            TreeViewCustom {
                 id: item_tree
                 width: parent.width/2
                 anchors{

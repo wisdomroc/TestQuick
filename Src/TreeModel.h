@@ -13,6 +13,19 @@ class TreeModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+
+    enum StudentTreeRole {
+        NameRole = Qt::UserRole + 10,
+        YuWenRole,
+        ShuXueRole,
+        WaiYuRole,
+        ScoreRole,
+        AverageScoreRole,
+        HeGeRole,
+        YouXiuRole
+    };
+    Q_ENUM(StudentTreeRole)
+
     explicit TreeModel(QStringList headers,QObject *parent = 0);
     ~TreeModel();
 
@@ -35,6 +48,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
 public:
     TreeItem *itemFromIndex(const QModelIndex &index) const;

@@ -15,7 +15,7 @@ Window {
 //        anchors.bottomMargin: 50
 //    }
 
-    TreeViewTest {
+    TreeViewStandard {
         id: treeViewTest
         anchors.fill: parent
         anchors.bottomMargin: 50
@@ -93,7 +93,7 @@ Window {
         }
     }
 
-
+    /*
     Component.onCompleted: {
 
         for (var j=0; j <300;j++){
@@ -140,6 +140,6 @@ Window {
             //  tableRoot.table.contentY = tableRoot.table.contentHeight +
             //         tableRoot.height
         }
-    }
+    }*/
 }
 

@@ -30,6 +30,10 @@ Item {
 
                Text {
                    text:model.name
+                   Text {
+                            text: (objRecursiveColumn.children.length > 2 ? objRecursiveColumn.children[1].visible ? qsTr("-  ") : qsTr("+ ") : qsTr("   ")) + model.name
+                            color: objRecursiveColumn.children.length > 2 ? "blue" : "green"
+                   }
                }
             }
 
