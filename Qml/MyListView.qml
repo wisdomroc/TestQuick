@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 import QtQml.Models 2.11
 import QtQuick.Layouts 1.0
 
+//! 使用ListView自定义的TableView
 //! 这里有个问题：
 //! 如果在ListView的Component.onCompleted里面初始化，然后在自定义表头中取不到相关的值
 //! 如果在studentListView中初始化，那么自定义表头中就可以正常取到值

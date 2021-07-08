@@ -1,7 +1,8 @@
 ﻿import QtQuick 2.4
 import QtQuick.Controls 2.4
 
-//还有一些样式没有导出，可以根据需求自己定义
+//! [使用ListView自定义出来的TreeView]
+//! 还有一些样式没有导出，可以根据需求自己定义
 Rectangle{
     id:control
 

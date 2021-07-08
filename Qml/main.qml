@@ -143,7 +143,7 @@ ApplicationWindow {
         }
         clip: true
         currentIndex: 1
-        property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "DragRefresh、ListModel、ListView、AddRow、RemoveRow", "TreeView Examples", "Test Examples"]
+        property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "使用ListView自定义TreeView；使用Qt内部的TreeView(版本大于5.5)", "TreeView Examples", "Test Examples"]
         /*
         Item {
             id: page0
@@ -239,17 +239,17 @@ ApplicationWindow {
             }
         }
 
-        /*
+
         Item {
             id: page2
             TreeViewCustom {
-                id: item_tree
+                id: treeViewCustom
                 width: parent.width/2
                 anchors{
                     left: parent.left
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 10
+                    bottomMargin: 100
                 }
                 //model: []
 
@@ -258,11 +258,10 @@ ApplicationWindow {
                     setTestDataA();
                 }
             }
-            Column{
+            Row {
                 anchors{
-                    right: parent.right
-                    top: parent.top
-                    margins: 10
+                    left: parent.left
+                    top: treeViewCustom.bottom
                 }
                 spacing: 10
                 Button{
@@ -279,7 +278,16 @@ ApplicationWindow {
                 }
                 Button{
                     text: "AutoExpand"
-                    onClicked: item_tree.autoExpand=!item_tree.autoExpand
+                    onClicked: treeViewCustom.autoExpand=!treeViewCustom.autoExpand
+                }
+            }
+            TreeViewStandard {
+                width: parent.width/2
+                anchors{
+                    left: treeViewCustom.right
+                    top: parent.top
+                    bottom: parent.bottom
+                    bottomMargin: 100
                 }
             }
         }
@@ -287,11 +295,11 @@ ApplicationWindow {
         TestTable {
             id: page3
         }
-        */
+
     }
 
     function setTestDataA(){
-        item_tree.model=JSON.parse('[
+        treeViewCustom.model=JSON.parse('[
         {
             "text":"1 one",
             "istitle":true,
@@ -334,7 +342,7 @@ ApplicationWindow {
     }
 
     function setTestDataB(){
-        item_tree.model=JSON.parse('[
+        treeViewCustom.model=JSON.parse('[
         {
             "text":"1 one",
             "istitle":true,

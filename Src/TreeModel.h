@@ -13,7 +13,7 @@ class TreeModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-
+    //! 为了可以在QML中访问，增加roleNames函数，需要自定义Role
     enum StudentTreeRole {
         NameRole = Qt::UserRole + 10,
         YuWenRole,
@@ -48,7 +48,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QHash<int, QByteArray> roleNames() const override;
+    QHash<int, QByteArray> roleNames() const override;  //! 需要在QML中使用，因此重写此虚函数
 
 public:
     TreeItem *itemFromIndex(const QModelIndex &index) const;

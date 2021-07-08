@@ -61,5 +61,10 @@
         <file>Image/Template/hybridG.png</file>
         <file>Image/Template/simpleTemplateIcon.png</file>
         <file>Image/Template/simpleTemplateIconG.png</file>
+        <file>Image/collapse.png</file>
+        <file>Image/expansion.png</file>
+        <file>Image/dir.png</file>
+        <file>Image/file.png</file>
+        <file>Image/pan.png</file>
     </qresource>
 </RCC>

@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
     engine->rootContext()->setContextProperty("studentListModel", studentListModel);
     engine->rootContext()->setContextProperty("studentTableModel", studentTableModel);
     engine->rootContext()->setContextProperty("treeModel", model);
-    engine->load(QUrl("qrc:/Qml/mainTest.qml"));
-//    engine->load(QUrl("qrc:/Qml/main.qml"));
+//    engine->load(QUrl("qrc:/Qml/mainTest.qml"));
+    engine->load(QUrl("qrc:/Qml/main.qml"));
 
 
     //! 自定义字体

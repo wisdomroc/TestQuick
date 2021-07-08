@@ -63,7 +63,7 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     {
         return item->data(index.column());
     }
-    else if(role == NameRole)
+    else if(role == NameRole)       //![0] 需要在QML中使用，因此需要在data虚函数里，对这些Role进行处理
     {
         return item->data(0);
     }
@@ -75,21 +75,25 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     {
         return item->data(2);
     }
-    else if(role == ScoreRole)
+    else if(role == WaiYuRole)
     {
         return item->data(3);
     }
-    else if(role == AverageScoreRole)
+    else if(role == ScoreRole)
     {
         return item->data(4);
     }
-    else if(role == HeGeRole)
+    else if(role == AverageScoreRole)
     {
         return item->data(5);
     }
-    else if(role == YouXiuRole)
+    else if(role == HeGeRole)
     {
         return item->data(6);
+    }
+    else if(role == YouXiuRole)     //![0] 需要在QML中使用，因此需要在data虚函数里，对这些Role进行处理
+    {
+        return item->data(7);
     }
     else if( role == Qt::TextAlignmentRole )
     {
