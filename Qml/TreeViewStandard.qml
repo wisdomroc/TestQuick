@@ -56,10 +56,11 @@ Rectangle {
         }
 
         itemDelegate: Item {
-            Text{
+            Text {
                 id:itemText
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: styleData.column === 0 ? Text.AlignLeft : Text.AlignHCenter
                 elide: styleData.elideMode
                 text: styleData.value
                 color: styleData.selected ? "#007dff":"white"
@@ -71,32 +72,32 @@ Rectangle {
                 Drag.supportedActions: Qt.CopyAction;                           //选择复制数据到DropArea
                 Drag.dragType: Drag.Automatic;                                  //选择自动开始拖动
                 Drag.mimeData: {"text": text}                                   //选择要传的数据，这里传文本
+            }
 
-                MouseArea{
-                    id:itemMosue
-                    hoverEnabled: true
-                    anchors.fill: parent
-                    drag.target: itemText
+            MouseArea{
+                id:itemMosue
+                hoverEnabled: true
+                anchors.fill: parent
+                drag.target: itemText
 
-                    Drag.onDragStarted: {
-                        console.log("start")
-                    }
-                    onPressed: {
-                        //点击了文字，选中该节点[QItemSelectionModel::Current为0x0010]
-                        //                     [QItemSelectionModel::Select为 0x0002]
-                        sel.setCurrentIndex(styleData.index,0x0010)
-
-                        if(styleData.isExpanded)
-                        {
-                            myTree.collapse(styleData.index)
-                        }
-                        else
-                        {
-                            myTree.expand(styleData.index)
-                        }
-                    }
-                    //onReleased: parent.Drag.drop()
+                Drag.onDragStarted: {
+                    console.log("start")
                 }
+                onPressed: {
+                    //点击了文字，选中该节点[QItemSelectionModel::Current为0x0010]
+                    //                     [QItemSelectionModel::Select为 0x0002]
+                    sel.setCurrentIndex(styleData.index,0x0010)
+
+                    if(styleData.isExpanded)
+                    {
+                        myTree.collapse(styleData.index)
+                    }
+                    else
+                    {
+                        myTree.expand(styleData.index)
+                    }
+                }
+                //onReleased: parent.Drag.drop()
             }
         }
     }
@@ -130,11 +131,11 @@ Rectangle {
                     GradientStop { position: 1.0; color: "darkBlue" }
                 }
                 Text {
-                   anchors.fill: parent
-                   color: "white"
-                   text: styleData.value
-                   verticalAlignment: Text.AlignVCenter
-                   horizontalAlignment: Text.AlignHCenter
+                    anchors.fill: parent
+                    color: "white"
+                    text: styleData.value
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
                 Rectangle {
                     width: 1

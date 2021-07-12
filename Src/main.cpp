@@ -1,5 +1,6 @@
 ﻿#include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickView>
 #include <QDebug>
 #include <QQmlContext>
 #include <QQuickView>
@@ -24,7 +25,8 @@ int main(int argc, char *argv[])
     app.setApplicationName("TestQuick");
     app.setOrganizationDomain("https://github.com/wisdomroc/TestQuick");
 
-    QQmlApplicationEngine *engine = new QQmlApplicationEngine();
+    QQuickView *view = new QQuickView();
+//    QQmlApplicationEngine *engine = qobject_cast<QQmlApplicationEngine *>(view->engine());
 
     Logger::initLog();
 
@@ -68,37 +70,38 @@ int main(int argc, char *argv[])
             << QStringLiteral("是否合格")
             << QStringLiteral("是否评优");
     //注意：此时构造的是自定义的TreeModel！
-    TreeModel* model = new TreeModel(headers);
+//    TreeModel* model = new TreeModel(headers);
 
-    TreeItem* root = model->root();
-    foreach (CLASS* c, mClasses)
-    {
-        //一级节点：班级
-        TreeItem* itemClass = new TreeItem(root);
-        itemClass->setLevel(1);     //设为一级节点，供显示时判断节点层级来转换数据指针类型
-        itemClass->setPtr(c);       //保存CLASS* c为其数据指针，显示时从该CLASS*取内容显示
-        root->appendChild(itemClass);
+//    TreeItem* root = model->root();
+//    foreach (CLASS* c, mClasses)
+//    {
+//        //一级节点：班级
+//        TreeItem* itemClass = new TreeItem(root);
+//        itemClass->setLevel(1);     //设为一级节点，供显示时判断节点层级来转换数据指针类型
+//        itemClass->setPtr(c);       //保存CLASS* c为其数据指针，显示时从该CLASS*取内容显示
+//        root->appendChild(itemClass);
 
-        foreach (STUDENT* s, c->students)
-        {
-            TreeItem* itemStudent = new TreeItem(itemClass);
-            itemStudent->setLevel(2);   //设为一级节点，供显示时判断节点层级来转换数据指针类型
-            itemStudent->setPtr(s);     //保存STUDENT* s为其数据指针，显示时从STUDENT*取内容显示
-            itemClass->appendChild(itemStudent);
-        }
-    }
+//        foreach (STUDENT* s, c->students)
+//        {
+//            TreeItem* itemStudent = new TreeItem(itemClass);
+//            itemStudent->setLevel(2);   //设为一级节点，供显示时判断节点层级来转换数据指针类型
+//            itemStudent->setPtr(s);     //保存STUDENT* s为其数据指针，显示时从STUDENT*取内容显示
+//            itemClass->appendChild(itemStudent);
+//        }
+//    }
 
 
-    TableStatus tableStatus;
-    StudentListModel *studentListModel = new StudentListModel();
-    StudentTableModel *studentTableModel = new StudentTableModel();
-    engine->rootContext()->setContextProperty("TableStatus", &tableStatus);
-    engine->rootContext()->setContextProperty("studentListModel", studentListModel);
-    engine->rootContext()->setContextProperty("studentTableModel", studentTableModel);
-    engine->rootContext()->setContextProperty("treeModel", model);
+//    TableStatus tableStatus;
+//    StudentListModel *studentListModel = new StudentListModel();
+//    StudentTableModel *studentTableModel = new StudentTableModel();
+//    engine->rootContext()->setContextProperty("TableStatus", &tableStatus);
+//    engine->rootContext()->setContextProperty("studentListModel", studentListModel);
+//    engine->rootContext()->setContextProperty("studentTableModel", studentTableModel);
+//    engine->rootContext()->setContextProperty("treeModel", model);
 //    engine->load(QUrl("qrc:/Qml/mainTest.qml"));
-    engine->load(QUrl("qrc:/Qml/main.qml"));
-
+//    engine->load(QUrl("qrc:/Qml/main.qml"));
+    view->setSource(QUrl("qrc:/Qml/mainTest.qml"));
+    view->show();
 
     //! 自定义字体
     /*

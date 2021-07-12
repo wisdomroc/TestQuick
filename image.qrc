@@ -66,5 +66,6 @@
         <file>Image/dir.png</file>
         <file>Image/file.png</file>
         <file>Image/pan.png</file>
+        <file>Image/tab.png</file>
     </qresource>
 </RCC>

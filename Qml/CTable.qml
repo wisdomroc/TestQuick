@@ -6,7 +6,7 @@ import QtQuick.Dialogs 1.2
 import QtQml 2.2
 import Tools 1.0
 
-//! QtQuick.Controls.1的TableView
+//! 包装QtQuick.Controls.1的TableView为自己的CTable
 
 import "Component"
 

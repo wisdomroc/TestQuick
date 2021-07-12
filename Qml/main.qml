@@ -142,14 +142,21 @@ ApplicationWindow {
             margins: 10
         }
         clip: true
-        currentIndex: 1
-        property var titleList: ["Control_1.TableView & Control_2.TableView Examples", "使用ListView自定义TreeView；使用Qt内部的TreeView(版本大于5.5)", "TreeView Examples", "Test Examples"]
-        /*
+        currentIndex: 0
+        property var titleList: ["QtQuick.Controls 1.4的TableView；", "用QtQuick.Controls 2的ListView来展示TableView", "使用ListView自定义TreeView；使用Qt内部的TreeView(版本大于5.5)", "TreeView Examples", "Test Examples"]
+
         Item {
             id: page0
-            MyTableView {
-                id: myTableView
-                anchors.centerIn: parent
+//            TableViewCustomMy {
+//                id: myTableView
+//                anchors.right: parent.right
+//                anchors.top: parent.top
+//                model: studentTableModel
+//            }
+
+            EfficientTable {
+                anchors.right: parent.right
+                anchors.top: parent.top
             }
 
             TagLine {
@@ -198,7 +205,7 @@ ApplicationWindow {
                 y: 500
             }
         }
-        */
+
 
         Item {
             id: page1
@@ -240,7 +247,7 @@ ApplicationWindow {
         }
 
 
-        Item {
+        Item {/* page2为TreeView的展示，包括自己用ListView实现的TreeView效果，以及Qt5.5以后原生的TreeView，对应的model为TreeModel */
             id: page2
             TreeViewCustom {
                 id: treeViewCustom
@@ -292,7 +299,7 @@ ApplicationWindow {
             }
         }
 
-        TestTable {
+        TableViewCustom {
             id: page3
         }
 

@@ -1,11 +1,11 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 
 //import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.12
 import EfficientModel 0.1
 import SortFilterModel 0.1
 
-//自定义QtQuick 2中的TableView
+/* 自定义QtQuick 2中的TableView */
 Item {
     id: control
 
@@ -53,7 +53,7 @@ Item {
             topMargin: _tableHeader.height
         }
 
-        clip: true
+        clip: true /* 会根据外框Item的边界进行剪切 */
         boundsBehavior: Flickable.StopAtBounds
 
         //rowSpacing: 1
@@ -73,25 +73,26 @@ Item {
         columnWidthProvider: function (column) {
             return control._columnWidthArr[column];
         }
+        ScrollBar.horizontal: TableScrollBar {
+            id: scroll_horizontal
+            anchors.bottom: parent.bottom
+            implicitHeight:scrollBarWidth
+        }
         ScrollBar.vertical: TableScrollBar {
             id: scroll_vertical
             anchors.right: parent.right
             implicitWidth: scrollBarWidth
         }
 
-        ScrollBar.horizontal: TableScrollBar {
-            id: scroll_horizontal
-            anchors.bottom: parent.bottom
-            implicitHeight:scrollBarWidth
-        }
         //model是在C++中定义的
-        model:_displayModel
+        model:_sourceModel
 
         delegate: TableCell{}
-        MouseArea{
+        MouseArea { /*** 直接将MouseArea覆盖到TableView上，那么mouse.y会跟着TableView的滚动而变大 ***/
             anchors.fill: parent
             onClicked: {
                 control.currentIndex = parseInt(mouse.y/control.rowHeight)
+                console.log("mouse.y: " + mouse.y )
             }
         }
     }

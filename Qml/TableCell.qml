@@ -1,6 +1,8 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 
 import QtQuick.Controls 1.4
+
+/* 配合EfficientTable进行使用，提供delegate支持 */
 
 Rectangle{
     color: currentIndex === model.row ?

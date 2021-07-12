@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Layouts 1.13
 import QtQuick.Controls 1.2 as QC12
 import QtQuick.Controls 2.0
@@ -7,6 +7,7 @@ Item {
     width: 900
     height: 800
     property Item tanhuang: tanhuang
+    property alias model: tableView.model
     ColumnLayout {
         anchors.fill: parent
         QC12.TableView {
@@ -15,7 +16,7 @@ Item {
             Layout.fillHeight: true
             clip: true
 
-            model: studentTableModel
+            model: []
 
             headerDelegate: headerDel  //表格头委托
             rowDelegate: rowDel    //表格行委托
@@ -134,22 +135,66 @@ Item {
             QC12.TableViewColumn {
                 role: "id"
                 title: "ID"
-                width: 200
+                width: 80
                 movable: false
             }
-            QC12.TableViewColumn {
-                role: "password"
-                title: "PASSWORD"
-                width: 300
-                movable: false
-            }
-            QC12.TableViewColumn {
-                role: "record"
-                title: "RECORD"
-                width: 400
-                movable: false
 
+            QC12.TableViewColumn {
+                role: "name"
+                title: "NAME"
+                width: 120
+                movable: false
             }
+            QC12.TableViewColumn {
+                role: "sex"
+                title: "SEX"
+                width: 40
+                movable: false
+            }
+
+            QC12.TableViewColumn {
+                role: "value1"
+                title: "VALUE1"
+                width: 80
+                movable: false
+            }
+            QC12.TableViewColumn {
+                role: "value2"
+                title: "VALUE2"
+                width: 80
+                movable: false
+            }
+            /*
+            QC12.TableViewColumn {
+                role: "value3"
+                title: "VALUE3"
+                width: 80
+                movable: false
+            }
+            QC12.TableViewColumn {
+                role: "value4"
+                title: "VALUE4"
+                width: 80
+                movable: false
+            }
+            QC12.TableViewColumn {
+                role: "value5"
+                title: "VALUE5"
+                width: 80
+                movable: false
+            }
+            QC12.TableViewColumn {
+                role: "value6"
+                title: "VALUE6"
+                width: 80
+                movable: false
+            }
+            QC12.TableViewColumn {
+                role: "value7"
+                title: "VALUE7"
+                width: 80
+                movable: false
+            }*/
         }
 
         RowLayout {

@@ -17,7 +17,7 @@
         <file>Qml/TreeViewCustom.qml</file>
         <file>Qml/TSoundByte.qml</file>
         <file>Qml/CTable.qml</file>
-        <file>Qml/TestTable.qml</file>
+        <file>Qml/TableViewCustom.qml</file>
         <file>Qml/Component/CColorButton.qml</file>
         <file>Qml/Component/CHoverButton.qml</file>
         <file>Qml/Component/CJsonListModel.qml</file>
@@ -31,7 +31,6 @@
         <file>qtquickcontrol2.conf</file>
         <file>Qml/Component/MyToggleButton.qml</file>
         <file>Qml/Component/MyBusyIndicator.qml</file>
-        <file>Qml/Component/MyTableView.qml</file>
         <file>Qml/Component/TagLine.qml</file>
         <file>Qml/Component/AmazingText.qml</file>
         <file>Qml/Component/MyFlowText.qml</file>
@@ -44,5 +43,7 @@
         <file>Qml/mainTest.qml</file>
         <file>Qml/TreeViewTest.qml</file>
         <file>Qml/TreeViewStandard.qml</file>
+        <file>Qml/TableViewCustomMy.qml</file>
+        <file>Qml/TabWidgetMy.qml</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@
 
 #include "student.h"
 #include <QAbstractTableModel>
+#include <QTimer>
 
 class StudentTableModel : public QAbstractTableModel
 {
@@ -11,7 +12,14 @@ public:
     enum StudentTableRole {
         IdRole = Qt::UserRole + 4,
         NameRole,
-        SexRole
+        SexRole,
+        Value1Role,
+        Value2Role,
+        Value3Role,
+        Value4Role,
+        Value5Role,
+        Value6Role,
+        Value7Role
     };
     Q_ENUM(StudentTableRole)
     explicit StudentTableModel(QObject *parent = nullptr);
@@ -42,9 +50,12 @@ public:
 
 private:
 
-    QList<Student *> m_students;
-    QList<QVariantList> m_datas;
+    QVector<Student *> m_students;
     QVariantList m_headers;
+    QTimer m_timer;
+
+private slots:
+    void slot_timeout();
 };
 
 #endif // STUDENTTABLEMODEL_H

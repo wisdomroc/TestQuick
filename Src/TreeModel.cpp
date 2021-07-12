@@ -97,21 +97,8 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     }
     else if( role == Qt::TextAlignmentRole )
     {
-        if( index.column() == 0 )
-        {
-            //第1列左对齐
-            return QVariant(Qt::AlignVCenter | Qt::AlignLeft);
-        }
-        else if( index.column() > 0 && index.column() < 6 )
-        {
-            //第2~6列右对齐
-            return QVariant(Qt::AlignVCenter | Qt::AlignRight);
-        }
-        else
-        {
-            //其他列居中对齐
-            return QVariant(Qt::AlignCenter);
-        }
+        //其他列居中对齐
+        return QVariant(Qt::AlignCenter);
     }
     else if(role == Qt::TextColorRole)
     {

@@ -1,57 +1,31 @@
 ﻿import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 1.4
-Window {
+import "Component"
+
+Item {
+
     id:root
-    visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+
+    //    TreeViewStandard {
+    //        id: treeViewTest
+    //        anchors.fill: parent
+    //        anchors.bottomMargin: 50
+    //    }
+
+        property var ss: 0
 
 
-//    EfficientTable {
-//        id:tableRoot
-//        anchors.fill: parent;
-//        anchors.bottomMargin: 50
-//    }
 
-    TreeViewStandard {
-        id: treeViewTest
-        anchors.fill: parent
+
+
+    EfficientTable {
+        id:tableRoot
+        anchors.fill: parent;
         anchors.bottomMargin: 50
     }
-
-
-
-    /*
-    TabView{
-        id:tabRoot
-
-        Tab{
-            title: "第一页"
-
-        }
-
-        Tab{
-            title: "第二页"
-            EfficientTable {
-                anchors.fill: parent
-            }
-        }
-        Tab{
-            title: "第三页"
-            EfficientTable {
-                anchors.fill: parent
-            }
-        }
-        Tab{
-            title: "第四页"
-            EfficientTable {
-                anchors.fill: parent
-            }
-        }
-    }*/
-
 
 
     Row {
@@ -60,9 +34,12 @@ Window {
         Button {
             text:"添加数据"
             onClicked: {
-                if (dataTimer.running){
+                if (dataTimer.running)
+                {
                     dataTimer.stop()
-                }else{
+                }
+                else
+                {
                     dataTimer.start()
                 }
             }
@@ -80,7 +57,6 @@ Window {
             text:"过滤数据"
             onClicked: {
                 tableRoot.filterMode = !tableRoot.filterMode
-
             }
         }
 
@@ -88,12 +64,10 @@ Window {
             text:"打印"
             onClicked: {
                 console.log(tableRoot.rows)
-
             }
         }
     }
 
-    /*
     Component.onCompleted: {
 
         for (var j=0; j <300;j++){
@@ -102,44 +76,33 @@ Window {
 
         dataTimer.start();
     }
-    property var ss: 0
+
     Timer {
         id:dataTimer
-        interval:1093
-        repeat: true
+        interval:1000
+        repeat: false
         onTriggered: {
-
-
-
             console.time("test1")
 
 
-            var data = {}
-            for (var i=0; i < 300; i++)
-            {
-
-                var roleName = "C"+String(i)
-                data[roleName]= "----"+String(ss)
-
-            }
             var datas = []
-            for (var j=0; j <10000;j++)
+            for (var j=0; j <100;j++)
             {
-
-
+                var data = {}
+                for (var i=0; i < 300; i++)
+                {
+                    var roleName = "C"+String(i)
+                    data[roleName]= "----"+String(ss)
+                }
 
                 ss =  ss +1
                 datas.push(data)
-
             }
             console.timeEnd("test1")
             tableRoot.insertRows(tableRoot.rows,datas)
-            //    tableRoot.insertRows(tableRoot.rows,datas)
-
-
-            //  tableRoot.table.contentY = tableRoot.table.contentHeight +
-            //         tableRoot.height
+            tableRoot.table.contentY = tableRoot.table.contentHeight + tableRoot.height
+            console.log("contentHeight: " + tableRoot.table.contentHeight)
         }
-    }*/
+    }
 }
 

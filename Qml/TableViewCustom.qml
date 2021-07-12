@@ -3,6 +3,9 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.0
 import Tools 1.0
 import "qrc:/Qml/Component/"
+
+/* 用的CTable，也是用的QtQuick.Controls 1 */
+
 Item {
     id: root
     width: 1340
